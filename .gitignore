@@ -1,0 +1,38 @@
+cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+*.py[cod]
+
+# Model files (too big for git)
+*.pt
+*.pth
+models/*.pt
+models/*.pth
+
+# Data files
+data/train.txt
+data/*.json
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
