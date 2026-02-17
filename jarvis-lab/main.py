@@ -2,22 +2,33 @@ from colors import green, blue, red, cyan, yellow, success, error, tag, bold
 from memory import add_note, list_notes, search_notes, delete_last_note, delete_all_notes, get_all_tags, notes_by_tag, load_memory
 from agents import run_lab_meeting
 from datetime import datetime
+from research_mode import cmd_experiment, cmd_idea, cmd_decision, cmd_progress, cmd_review, cmd_todo
 
 
 def print_help():
     """Display available commands"""
-    print("\nCommands:")
-    print("  note [text]        - save a note to memory (prompts if blank)")
-    print("  notes [tag]        - list recent notes (optionally filter by tag)")
+    print("\n📝 Core Commands:")
+    print("  note [text]        - save a note to memory")
+    print("  notes [tag]        - list recent notes")
     print("  search <query>     - search notes")
     print("  tags               - list all tags")
-    print("  export <format>    - export notes to file (markdown/json/txt)")
+    print("  export <format>    - export notes to file")
     print("  imagine [prompt]   - generate creative text with LLM")
-    print("  context on/off     - toggle context mode for lab meetings")
+    print("  context on/off     - toggle context mode")
     print("  lab <topic>        - run multi-agent lab meeting")
-    print("  delnote            - delete the most recent note")
+    
+    print("\n🔬 Research Mode:")
+    print("  experiment         - log research experiment")
+    print("  idea <text>        - quick capture idea")
+    print("  decision           - log design decision")
+    print("  progress           - view research summary")
+    print("  review             - capture learning")
+    print("  todo <task>        - track research tasks")
+    
+    print("\n🛠️ Utilities:")
+    print("  delnote            - delete most recent note")
     print("  clear              - delete all notes")
-    print("  help               - show commands")
+    print("  help               - show this help")
     print("  quit               - exit\n")
 
 
@@ -326,6 +337,12 @@ def main():
         "export": cmd_export,
         "imagine": cmd_imagine,
         "lab": None,
+        "experiment": cmd_experiment,
+        "idea": cmd_idea,
+        "decision": cmd_decision,
+        "progress": cmd_progress,
+        "review": cmd_review,
+        "todo": cmd_todo,
         "help": cmd_help,
         "quit": cmd_quit,
     }
