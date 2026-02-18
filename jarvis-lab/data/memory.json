@@ -4,6 +4,71 @@
       "text": "ROMEO:\nI I Mith tee ase for fre to he tefce wot\nThe 'ite:\nOich le male,\nCud ar, mor that asu'c tord\nMistheat yourn hin githe plate and hiuk:\nHud tave dos hot to this ollr mone grath.\n\nCANW::\nUer the y",
       "tag": "generated",
       "timestamp": "2026-02-16T10:38:31"
+    },
+    {
+      "text": "Set up research infrastructure | Reason: Need systematic tracking to prevent tunnel vision and lost work",
+      "tag": "decision",
+      "timestamp": "2026-02-17T14:22:39"
+    },
+    {
+      "text": "JARVIS tracking it own development is very meta",
+      "tag": "idea",
+      "timestamp": "2026-02-17T14:22:59"
+    },
+    {
+      "text": "Read \"Generative Agents\" paper",
+      "tag": "todo",
+      "timestamp": "2026-02-17T14:23:18"
+    },
+    {
+      "text": "Set up GPT-2 baseline for multi-agent experiments",
+      "tag": "todo",
+      "timestamp": "2026-02-17T14:23:38"
+    },
+    {
+      "text": "Define clear evaluation metrics for agent quality",
+      "tag": "todo",
+      "timestamp": "2026-02-17T14:23:59"
+    },
+    {
+      "text": "Today I learned how to set up proper researchinfrastructure: git for code, JARVIS for thoughts, structured experiments",
+      "tag": "learning",
+      "timestamp": "2026-02-17T14:24:43"
+    },
+    {
+      "text": "Start with debate experiments before emergent collaboration | Reason: Need solid baseline and infrastructure before exploring novelty",
+      "tag": "decision",
+      "timestamp": "2026-02-17T20:09:30"
+    },
+    {
+      "text": "Week 1: Set up GPT-2 and baseline measurements",
+      "tag": "todo",
+      "timestamp": "2026-02-17T20:09:45"
+    },
+    {
+      "text": "Week 2: Build and test two-agent debate system",
+      "tag": "todo",
+      "timestamp": "2026-02-17T20:10:03"
+    },
+    {
+      "text": "Week 3: optimize debate and document findings",
+      "tag": "todo",
+      "timestamp": "2026-02-17T20:10:17"
+    },
+    {
+      "text": "Week 4+: Design emergent collaboration experiments",
+      "tag": "todo",
+      "timestamp": "2026-02-17T20:10:35"
+    },
+    {
+      "text": "Emergent collaboration could reveal natural coordination patterns",
+      "tag": "idea",
+      "timestamp": "2026-02-17T20:10:53"
+    },
+    {
+      "text": "compare emergent vs structured on same tasks",
+      "tag": "idea",
+      "timestamp": "2026-02-17T20:11:04"
     }
   ]
 }
