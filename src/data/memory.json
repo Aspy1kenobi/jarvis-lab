@@ -69,6 +69,61 @@
       "text": "compare emergent vs structured on same tasks",
       "tag": "idea",
       "timestamp": "2026-02-17T20:11:04"
+    },
+    {
+      "text": "Read Constitutional AI paper - learned how AI can critiqu itself to improve safety and quality",
+      "tag": "learning",
+      "timestamp": "2026-02-17T21:05:41"
+    },
+    {
+      "text": "Read Generative Agents paper - saw how agents with memory and reflection create emergent behaviors",
+      "tag": "learning",
+      "timestamp": "2026-02-17T21:06:20"
+    },
+    {
+      "text": "Constitutional AI's critique method could directly apply to our debate system",
+      "tag": "idea",
+      "timestamp": "2026-02-17T21:08:19"
+    },
+    {
+      "text": "Generative Agents' memory architecture is similar to JARVIS - could use retrieval for agent context",
+      "tag": "idea",
+      "timestamp": "2026-02-17T21:08:47"
+    },
+    {
+      "text": "Study both papers' methods for agent improvement | Reason: Directly relevant to debate and emergence experiments",
+      "tag": "decision",
+      "timestamp": "2026-02-17T21:09:37"
+    },
+    {
+      "text": "Generative Agents' memory architecture maps perfectly to Phase 3 emergence research",
+      "tag": "idea",
+      "timestamp": "2026-02-17T21:38:42"
+    },
+    {
+      "text": "Constitutional AI's critique method is exactly what debate phase needs",
+      "tag": "idea",
+      "timestamp": "2026-02-17T21:39:08"
+    },
+    {
+      "text": "Implement memory retrieval before starting emergence phase | Reason: Generative Agents showed this is critical",
+      "tag": "decision",
+      "timestamp": "2026-02-17T21:39:41"
+    },
+    {
+      "text": "Use COnstitutional AI prompting style for critic agent | Reason: Proven to work well",
+      "tag": "decision",
+      "timestamp": "2026-02-17T21:40:07"
+    },
+    {
+      "text": "Implement recency + importance + relevance scoring for memory retrieval",
+      "tag": "todo",
+      "timestamp": "2026-02-17T21:40:33"
+    },
+    {
+      "text": "Add reflection mechanism to agents (synthesize past experiences)",
+      "tag": "todo",
+      "timestamp": "2026-02-17T21:41:44"
     }
   ]
 }
