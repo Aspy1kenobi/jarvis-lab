@@ -1,0 +1,144 @@
+{
+  "experiment": "baseline",
+  "model": "gpt2",
+  "date": "2026-02-18T19:37:50.371727",
+  "overall_score": 0.0,
+  "total_passed": 0,
+  "total_tests": 49,
+  "tasks": [
+    {
+      "task_id": 1,
+      "task_name": "is_palindrome",
+      "passed": 0,
+      "total": 6,
+      "score": 0.0,
+      "time_s": 3.96,
+      "generated_code": "def is_palindrome(s):\n    \"\"\"\n    Returns True if string s is a palindrome, False otherwise.\n    Ignores spaces and capitalization.\n    \"\"\"\n\n# This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like characters.\n\n#\n\n# # This function is called to find an array of palindrome-like\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ('racecar',), 'expected': True, 'got': None}",
+        "{'input': ('hello',), 'expected': False, 'got': None}",
+        "{'input': ('A man a plan a canal Panama',), 'expected': True, 'got': None}"
+      ]
+    },
+    {
+      "task_id": 2,
+      "task_name": "fibonacci",
+      "passed": 0,
+      "total": 5,
+      "score": 0.0,
+      "time_s": 3.89,
+      "generated_code": "def fibonacci(n):\n    \"\"\"\n    Returns the nth Fibonacci number.\n    fibonacci(0) = 0, fibonacci(1) = 1\n    \"\"\"\n\n# The first two arguments are the number of digits in the Fibonacci sequence.\n\n# The first argument is the number of digits in the Fibonacci sequence.\n\n# The second argument is the number of digits in the Fibonacci sequence.\n\n# The third argument is the number of digits in the Fibonacci sequence.\n\n# The fourth argument is the number of digits in the Fibonacci sequence.\n\n# The fifth argument is the number of digits in the Fibonacci sequence.\n\n# The sixth argument is the number of digits in the Fibonacci sequence.\n\n# The seventh argument is the number of digits in the Fibonacci sequence.\n\n# The eighth argument is the number of digits in the Fibonacci sequence.\n\n# The ninth argument is the number of digits in the Fibonacci sequence.\n\n# The tenth argument is the number of digits in the Fibonacci sequence.\n\n\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': (0,), 'expected': 0, 'got': None}",
+        "{'input': (1,), 'expected': 1, 'got': None}",
+        "{'input': (2,), 'expected': 1, 'got': None}"
+      ]
+    },
+    {
+      "task_id": 3,
+      "task_name": "reverse_words",
+      "passed": 0,
+      "total": 5,
+      "score": 0.0,
+      "time_s": 3.89,
+      "generated_code": "def reverse_words(s):\n    \"\"\"\n    Reverses the order of words in string s.\n    Example: 'hello world' -> 'world hello'\n    \"\"\"\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n'''\n\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'error': 'SyntaxError line 107: unexpected indent'}"
+      ]
+    },
+    {
+      "task_id": 4,
+      "task_name": "find_duplicates",
+      "passed": 0,
+      "total": 4,
+      "score": 0.0,
+      "time_s": 3.92,
+      "generated_code": "def find_duplicates(lst):\n    \"\"\"\n    Returns a list of duplicate elements in lst.\n    Each duplicate should appear only once in the result.\n    \"\"\"\n\n# This function is called when a list of duplicates is found.\n\n#   The first element of the list is the first element of the list.\n\n#   The second element of the list is the second element of the list.\n\n#   The third element of the list is the third element of the list.\n\n#   The fourth element of the list is the fourth element of the list.\n\n#   The fifth element of the list is the fifth element of the list.\n\n#   The sixth element of the list is the sixth element of the list.\n\n#   The seventh element of the list is the seventh element of the list.\n\n#   The eighth element of the list is the eighth element of the list.\n\n#   The ninth element of the list is the ninth element of the list.\n\n#   The tenth element of the list is the tenth\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ([1, 2, 3, 2, 4, 3],), 'expected': [2, 3], 'got': None}",
+        "{'input': ([1, 2, 3, 4],), 'expected': [], 'got': None}",
+        "{'input': ([1, 1, 1],), 'expected': [1], 'got': None}"
+      ]
+    },
+    {
+      "task_id": 5,
+      "task_name": "merge_sorted",
+      "passed": 0,
+      "total": 4,
+      "score": 0.0,
+      "time_s": 3.88,
+      "generated_code": "def merge_sorted(list1, list2):\n    \"\"\"\n    Merges two sorted lists into one sorted list.\n    \"\"\"\n\n# This is a simple example of how to use the merge_sorted function.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted list.\n\n#\n\n# The merge_sorted function is used to merge a list into a sorted\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ([1, 3, 5], [2, 4, 6]), 'expected': [1, 2, 3, 4, 5, 6], 'got': None}",
+        "{'input': ([1, 2, 3], []), 'expected': [1, 2, 3], 'got': None}",
+        "{'input': ([], [1, 2]), 'expected': [1, 2], 'got': None}"
+      ]
+    },
+    {
+      "task_id": 6,
+      "task_name": "is_prime",
+      "passed": 0,
+      "total": 7,
+      "score": 0.0,
+      "time_s": 3.88,
+      "generated_code": "def is_prime(n):\n    \"\"\"\n    Returns True if n is a prime number, False otherwise.\n    \"\"\"\n\nreturn False if n is not a prime number\n",
+      "failures": [
+        "{'error': \"SyntaxError line 6: expected 'else' after 'if' expression\"}"
+      ]
+    },
+    {
+      "task_id": 7,
+      "task_name": "count_vowels",
+      "passed": 0,
+      "total": 5,
+      "score": 0.0,
+      "time_s": 3.92,
+      "generated_code": "def count_vowels(s):\n    \"\"\"\n    Returns the number of vowels (a, e, i, o, u) in string s.\n    Case insensitive.\n    \"\"\"\n\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ('hello',), 'expected': 2, 'got': None}",
+        "{'input': ('AEIOU',), 'expected': 5, 'got': None}",
+        "{'input': ('xyz',), 'expected': 0, 'got': None}"
+      ]
+    },
+    {
+      "task_id": 8,
+      "task_name": "binary_search",
+      "passed": 0,
+      "total": 5,
+      "score": 0.0,
+      "time_s": 3.91,
+      "generated_code": "def binary_search(lst, target):\n    \"\"\"\n    Returns the index of target in sorted list lst.\n    Returns -1 if not found.\n    \"\"\"\n\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ([1, 3, 5, 7, 9], 5), 'expected': 2, 'got': None}",
+        "{'input': ([1, 3, 5, 7, 9], 1), 'expected': 0, 'got': None}",
+        "{'input': ([1, 3, 5, 7, 9], 9), 'expected': 4, 'got': None}"
+      ]
+    },
+    {
+      "task_id": 9,
+      "task_name": "remove_duplicates",
+      "passed": 0,
+      "total": 4,
+      "score": 0.0,
+      "time_s": 3.88,
+      "generated_code": "def remove_duplicates(lst):\n    \"\"\"\n    Returns a new list with duplicates removed, preserving order.\n    \"\"\"\n\n# This function is not supported by the Python 2.x standard library.\n\n# It is not supported by the Python 3.x standard library.\n\n# It is not supported by the Python 4.x standard library.\n\n# It is not supported by the Python 5.x standard library.\n\n# It is not supported by the Python 6.x standard library.\n\n# It is not supported by the Python 7.x standard library.\n\n# It is not supported by the Python 8.x standard library.\n\n# It is not supported by the Python 9.x standard library.\n\n# It is not supported by the Python 10.x standard library.\n\n# It is not supported by the Python 11.x standard library.\n\n# It is not supported by the Python 12.x standard library.\n\n# It is not supported by the Python 13.x standard library.\n\n# It is not supported by\n    return None  # GPT-2 generated no return statement",
+      "failures": [
+        "{'input': ([1, 2, 2, 3, 3, 3, 4],), 'expected': [1, 2, 3, 4], 'got': None}",
+        "{'input': ([1, 1, 1],), 'expected': [1], 'got': None}",
+        "{'input': ([],), 'expected': [], 'got': None}"
+      ]
+    },
+    {
+      "task_id": 10,
+      "task_name": "factorial",
+      "passed": 0,
+      "total": 4,
+      "score": 0.0,
+      "time_s": 3.96,
+      "generated_code": "def factorial(n):\n    \"\"\"\n    Returns n! (n factorial).\n    factorial(0) = 1\n    \"\"\"\n\nreturn factorial(factorial(n) + 1)\n",
+      "failures": [
+        "{'error': \"SyntaxError line 7: 'return' outside function\"}"
+      ]
+    }
+  ]
+}

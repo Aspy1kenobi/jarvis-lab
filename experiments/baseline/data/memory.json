@@ -1,0 +1,9 @@
+{
+  "notes": [
+    {
+      "text": "baseline-gpt2 | H: GPT-2 zero-shot on 10 tasks | R: 0/49 passed (0%) — generates shape not logic | Date: 2026-02-18",
+      "tag": "experiment",
+      "timestamp": "2026-02-18T19:39:42"
+    }
+  ]
+}
