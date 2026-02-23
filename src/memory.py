@@ -42,18 +42,22 @@ class Memory:
         self.data = self._load()
 
     # ── Internal I/O ──────────────────────────────────────────
-
     def _load(self):
-        """Read from disk. Only called in __init__."""
         if not os.path.exists(MEMORY_PATH):
             return {"notes": []}
-        with open(MEMORY_PATH, "r", encoding="utf-8") as f:
-            return json.load(f)
+        try:
+            with open(MEMORY_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            print("Warning: memory.json is corrupted. Starting with empty memory.")
+            return {"notes": []}
 
     def _save(self):
-        """Write current state to disk. Called after any mutation."""
-        with open(MEMORY_PATH, "w", encoding="utf-8") as f:
-            json.dump(self.data, f, indent=2, ensure_ascii=False)
+        try:
+            with open(MEMORY_PATH, "w", encoding="utf-8") as f:
+                json.dump(self.data, f, indent=2, ensure_ascii=False)
+        except OSError as e:
+            print(f"Warning: could not save memory: {e}")
 
     # ── Core note operations ───────────────────────────────────
 
