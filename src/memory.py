@@ -26,6 +26,23 @@ def parse_note(text):
     return tag, text
 
 
+def format_note_display(note):
+    """
+    Format a single note dict as a display string.
+    Output: "[tag] Feb 23, 02:30 PM — note text"
+    If no tag, omits the tag portion entirely.
+    """
+    text = note.get("text", "")
+    tag = note.get("tag")
+    timestamp = note.get("timestamp")
+    dt = datetime.fromisoformat(timestamp)
+    formatted_time = dt.strftime("%b %d, %I:%M %p")
+    if tag:
+        return f"[{tag}] {formatted_time} — {text}"
+    else:
+        return f"{formatted_time} — {text}"
+
+
 # ═══════════════════════════════════════════════════════════════
 # MEMORY CLASS
 # ═══════════════════════════════════════════════════════════════
@@ -42,7 +59,9 @@ class Memory:
         self.data = self._load()
 
     # ── Internal I/O ──────────────────────────────────────────
+
     def _load(self):
+        """Read from disk. Only called in __init__."""
         if not os.path.exists(MEMORY_PATH):
             return {"notes": []}
         try:
@@ -53,6 +72,7 @@ class Memory:
             return {"notes": []}
 
     def _save(self):
+        """Write current state to disk. Called after any mutation."""
         try:
             with open(MEMORY_PATH, "w", encoding="utf-8") as f:
                 json.dump(self.data, f, indent=2, ensure_ascii=False)
