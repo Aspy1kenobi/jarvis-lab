@@ -1,3 +1,12 @@
+from datetime import datetime
+
+def log_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"[log_call] {func.__name__} called with: {args} {kwargs}")
+        return func(*args, **kwargs)
+    return wrapper
+
+@log_call
 def agent_planner(topic: str, context: str = "") -> str:
     output = (
         f"[Planner]\n"
@@ -17,6 +26,7 @@ def agent_planner(topic: str, context: str = "") -> str:
     return output
 
 
+@log_call
 def agent_engineer(topic: str, context: str = "") -> str:
     output = f"[Engineer]\n"
 
@@ -32,6 +42,7 @@ def agent_engineer(topic: str, context: str = "") -> str:
     return output
 
 
+@log_call
 def agent_skeptic(topic: str, context: str = "") -> str:
     output = f"[Skeptic]\n"
 
@@ -47,6 +58,7 @@ def agent_skeptic(topic: str, context: str = "") -> str:
     return output
 
 
+@log_call
 def agent_ethicist(topic: str, context: str = "") -> str:
     return (
         f"[Ethicist]\n"
@@ -56,6 +68,7 @@ def agent_ethicist(topic: str, context: str = "") -> str:
         f"- Can we add a human approval step?\n"
     )
 
+@log_call
 def agent_imagination(topic: str, context: str = "") -> str:
     """Creative agent powered by your LLM"""
     from llm_bridge import generate_text, is_available, initialize_llm
