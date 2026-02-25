@@ -219,9 +219,9 @@ def cmd_imagine(args):
     if not is_available():
         print(error("✗ LLM not available."))
         print("Make sure the transformer model exists at:")
-        print("  /Users/nick/jarvis-lab/LLM/models/mini_transformer_best.pt")
+        print(f"  Check that your model file exists at the expected path.")
         return
-    
+      
     # Default values
     prompt = "Once upon a time"
     length = 300

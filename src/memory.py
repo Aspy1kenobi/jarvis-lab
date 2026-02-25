@@ -269,18 +269,15 @@ class Memory:
 
         return filename, len(notes)
 
-    def export_to_txt(tag=None):
-        """ 
+    def export_to_txt(self, tag=None):
+        """
         Export notes to a plain text file.
         If tag is provided, only export notes with that tag.
         Returns: (filename, count) tuple
         """
-        memory = load_memory()
-        notes = memory.get("notes", [])
+        notes = self._filter_notes(tag)
 
-        # Filter by tag if provided
         if tag:
-            notes = [n for n in notes if n.get("tag") and n["tag"].lower() == tag.lower()]
             filename = f"{tag}_notes_{datetime.now().strftime('%Y-%m-%d')}.txt"
         else:
             filename = f"notes_backup_{datetime.now().strftime('%Y-%m-%d')}.txt"
@@ -288,27 +285,22 @@ class Memory:
         if not notes:
             return None, 0
 
-        # Build header with normal concatenation (these are fixed, not looped)
         header = (
-            "JARVIS NOTES EXPORT\n"
-            "=" * 60 + "\n"
-            f"Exported: {datetime.now().strftime('%B %d, %Y at %I:%M %p')}\n"
-            f"Total Notes: {len(notes)}\n"
+            "JARVIS NOTES EXPORT\n" +
+            "=" * 60 + "\n" +
+            f"Exported: {datetime.now().strftime('%B %d, %Y at %I:%M %p')}\n" +
+            f"Total Notes: {len(notes)}\n" +
             "=" * 60 + "\n\n"
         )
 
-        # Build note lines with join + generator expression
         note_lines = "".join(
             f"{i}, {datetime.fromisoformat(note['timestamp']).strftime('%b %d, %I:%M %p')} - "
             f"{'[' + note['tag'] + '] ' if note.get('tag') else ''}{note['text']}\n"
             for i, note in enumerate(notes, 1)
         )
 
-        content = header + note_lines
-
-        # Write to file
         with open(filename, "w", encoding="utf-8") as f:
-            f.write(content)
+            f.write(header + note_lines)
 
         return filename, len(notes)
 
