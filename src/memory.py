@@ -21,6 +21,8 @@ def parse_note(text):
     if text.startswith("[") and "]" in text:
         closing = text.find("]")
         tag = text[1:closing].strip()
+        if not tag:
+            tag = None
         text = text[closing + 1:].strip()
 
     return tag, text
