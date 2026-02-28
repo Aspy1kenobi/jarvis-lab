@@ -4,6 +4,21 @@ from datetime import datetime
 
 MEMORY_PATH = os.path.join("data", "memory.json")
 
+from dataclasses import dataclass, asdict
+from typing import Optional
+
+@dataclass
+class Note:
+    text: str
+    tag: Optional[str]
+    timestamp: str
+
+    def to_dict(self):
+        return asdict(self)
+    
+    @classmethod
+    def from_dict(cls, d):
+        return cls(text=d["text"], tag=d["tag"], timestamp=d["timestamp"])
 
 # ═══════════════════════════════════════════════════════════════
 # HELPER — lives outside the class because it doesn't need state

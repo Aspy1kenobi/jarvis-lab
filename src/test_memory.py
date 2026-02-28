@@ -1,4 +1,4 @@
-from memory import parse_note, Memory
+from memory import parse_note, Memory, Note
 
 def test_parse_note_with_tag():
     tag, text = parse_note("[research] attention is all you need")
@@ -65,3 +65,14 @@ def test_delete_last_note(tmp_path, monkeypatch):
     # 3. calling delete_last_note on an empty Memory returns None
     m.delete_last_note()  # removes the remaining "first note"
     assert m.delete_last_note() is None
+
+def test_note_dataclass_roundtrip():
+    note = Note(text="attention mechanisms", tag="research", timestamp="2026-02-28T10:00:00")
+
+    d = note.to_dict()
+    assert d == {"text": "attention mechanisms", "tag": "research", "timestamp": "2026-02-28T10:00:00"}
+
+    restored = Note.from_dict(d)
+    assert restored.text == "attention mechanisms"
+    assert restored.tag == "research"
+    assert restored == note
