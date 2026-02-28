@@ -45,3 +45,23 @@ def test_export_to_txt(tmp_path, monkeypatch):
     assert "attention mechanisms" in content
     assert "unrelated note" in content
     assert "[research]" in content
+
+def test_delete_last_note(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+
+    m = Memory()
+    m.data = {"notes": []}
+    m.add_note("first note")
+    m.add_note("second note")
+
+    deleted = m.delete_last_note()
+
+    # 1. the deleted note's text is correct
+    assert deleted["text"] == "second note"
+    
+    # 2. only one note remains in memory
+    assert len(m.data["notes"]) == 1
+    
+    # 3. calling delete_last_note on an empty Memory returns None
+    m.delete_last_note()  # removes the remaining "first note"
+    assert m.delete_last_note() is None

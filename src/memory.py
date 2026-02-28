@@ -49,6 +49,12 @@ def format_note_display(note):
 # MEMORY CLASS
 # ═══════════════════════════════════════════════════════════════
 
+from contextlib import contextmanager
+@contextmanager
+def managed_save(memory_instance):
+    yield
+    memory_instance._save()
+    
 class Memory:
     """
     Manages all note storage. Loads from disk once on creation;
@@ -98,13 +104,11 @@ class Memory:
         return self.data["notes"][-limit:]
 
     def delete_last_note(self):
-        """Delete and return the most recent note, or None if empty."""
-        notes = self.data["notes"]
-        if not notes:
-            return None
-        deleted = notes.pop()
-        self._save()
-        return deleted
+        with managed_save(self):
+            notes = self.data["notes"]
+            if not notes:
+                return None
+            return notes.pop()
 
     def delete_all_notes(self):
         """Delete all notes. Returns count deleted, or None if already empty."""
