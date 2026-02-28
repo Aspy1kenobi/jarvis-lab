@@ -1,11 +1,14 @@
 import json
 import os
 from datetime import datetime
+import logging
+logger = logging.getLogger(__name__)
 
 MEMORY_PATH = os.path.join("data", "memory.json")
 
 from dataclasses import dataclass, asdict
 from typing import Optional
+
 
 @dataclass
 class Note:
@@ -91,8 +94,7 @@ class Memory:
             with open(MEMORY_PATH, "r", encoding="utf-8") as f:
                 return json.load(f)
         except json.JSONDecodeError:
-            print("Warning: memory.json is corrupted. Starting with empty memory.")
-            return {"notes": []}
+            logger.warning("memory.json is corrupted. Starting with empty memory.")            return {"notes": []}
 
     def _save(self):
         """Write current state to disk. Called after any mutation."""
@@ -100,7 +102,7 @@ class Memory:
             with open(MEMORY_PATH, "w", encoding="utf-8") as f:
                 json.dump(self.data, f, indent=2, ensure_ascii=False)
         except OSError as e:
-            print(f"Warning: could not save memory: {e}")
+            logger.warning("Could not save memory: %s", e)
 
     # ── Core note operations ───────────────────────────────────
 

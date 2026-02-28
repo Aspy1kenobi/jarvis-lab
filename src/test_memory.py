@@ -1,4 +1,5 @@
 from memory import parse_note, Memory, Note
+from agents import log_call
 
 def test_parse_note_with_tag():
     tag, text = parse_note("[research] attention is all you need")
@@ -76,3 +77,4 @@ def test_note_dataclass_roundtrip():
     assert restored.text == "attention mechanisms"
     assert restored.tag == "research"
     assert restored == note
+

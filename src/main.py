@@ -3,7 +3,12 @@ from memory import add_note, list_notes, search_notes, delete_last_note, delete_
 from agents import run_lab_meeting
 from datetime import datetime
 from research_mode import cmd_experiment, cmd_idea, cmd_decision, cmd_progress, cmd_review, cmd_todo
-
+import logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+    datefmt="%H:%M:%S"
+)
 
 def print_help():
     """Display available commands"""

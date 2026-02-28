@@ -1,8 +1,10 @@
 from datetime import datetime
+import logging
+logger = logging.getLogger(__name__)
 
 def log_call(func):
     def wrapper(*args, **kwargs):
-        print(f"[log_call] {func.__name__} called with: {args} {kwargs}")
+        logger.debug("[%s] called with: %s %s", func.__name__, args, kwargs)
         return func(*args, **kwargs)
     return wrapper
 
