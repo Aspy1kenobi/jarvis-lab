@@ -1,5 +1,9 @@
 from colors import green, blue, red, cyan, yellow, success, error, tag, bold
-from memory import add_note, list_notes, search_notes, delete_last_note, delete_all_notes, get_all_tags, notes_by_tag, load_memory, retrieve 
+from memory import (
+    add_note, list_notes, search_notes,
+    delete_last_note, delete_all_notes,
+    get_all_tags, notes_by_tag, load_memory, retrieve
+)
 from agents import run_lab_meeting
 from datetime import datetime
 from research_mode import cmd_experiment, cmd_idea, cmd_decision, cmd_progress, cmd_review, cmd_todo
@@ -274,6 +278,17 @@ def cmd_imagine(args):
     else:
         print(error("✗ Failed to generate text"))
 
+def cmd_retrieve(args):
+    if not args:
+        print("Usage: retrieve <query>")
+        return
+    results = retrieve(args)
+    if not results:
+        print("No results.")
+    else:
+        print(f"\nTop results for '{args}':")
+        _display_notes(results)
+
 
 def cmd_help(args):
     """Show help text"""
@@ -284,7 +299,6 @@ def cmd_quit(args):
     """Exit the program"""
     print("Goodbye.")
     exit()
-
 
 # ═══════════════════════════════════════════════════════════════
 # HELPER FUNCTIONS
@@ -343,7 +357,7 @@ def main():
         "export": cmd_export,
         "imagine": cmd_imagine,
         "lab": None,
-        "retrieve": retrieve,
+        "retrieve": cmd_retrieve,
         "experiment": cmd_experiment,
         "idea": cmd_idea,
         "decision": cmd_decision,

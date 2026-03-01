@@ -96,7 +96,8 @@ class Memory:
             with open(MEMORY_PATH, "r", encoding="utf-8") as f:
                 return json.load(f)
         except json.JSONDecodeError:
-            logger.warning("memory.json is corrupted. Starting with empty memory.")            return {"notes": []}
+            logger.warning("memory.json is corrupted. Starting with empty memory.")            
+            return {"notes": []}
 
     def _save(self):
         """Write current state to disk. Called after any mutation."""
@@ -378,3 +379,6 @@ def export_to_json(tag=None):
 
 def export_to_txt(tag=None):
     return _memory.export_to_txt(tag)
+
+def retrieve(query, top_k=5, decay=0.01):
+    return _memory.retrieve(query, top_k, decay)
