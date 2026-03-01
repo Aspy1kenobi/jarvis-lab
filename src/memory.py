@@ -1,8 +1,10 @@
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import logging
 logger = logging.getLogger(__name__)
+import numpy as np
+
 
 MEMORY_PATH = os.path.join("data", "memory.json")
 
@@ -139,44 +141,50 @@ class Memory:
 
     # ── Search and filtering ───────────────────────────────────
 
-    def search_notes(self, query):
+    def retrieve(self, query: str, top_k: int = 5, decay: float =0.01) -> list:
         """
-        Search notes by text or tag with relevance scoring.
-        Returns notes sorted by relevance (highest score first).
-        Each result includes a 'score' field.
+        Retrieve top-k notes using the Generative Agents scoring formula:
+        score = recency + importance + relevance
+
+        ALL three components are normalized to [0, 1] before summing.
         """
+
         notes = self.data["notes"]
+        if not notes:
+            return []
+        
         q = query.lower().strip()
-        scored_results = []
+        n = len(notes)
 
-        for note in notes:
-            score = 0
-            text_lower = note["text"].lower()
+        # ── 1. Recency scores ─────────────────────────────────────
+        now = datetime.now()
+        hours_elapsed = np.array([
+            (now - datetime.fromisoformat(note["timestamp"])).total_seconds() / 3600
+            for note in notes
+        ])
+        recency_scores = np.exp(-decay * hours_elapsed)
 
-            # Score 1: Count how many times query appears in text
-            text_count = text_lower.count(q)
-            score += text_count * 2  # each occurrence = 2 points
+        # ── 2. Importance scores ──────────────────────────────────
+        importance_scores = np.array([
+            1.0 if note.get("tag") else 0.5
+            for note in notes
+        ])
 
-            # Score 2: Bonus if query is a whole word (not just part of a word)
-            words = text_lower.split()
-            if q in words:
-                score += 5  # whole word match = 5 bonus points
+        # ── 3. Relevance scores ───────────────────────────────────
+        raw_relevance = np.array([
+            note["text"].lower().count(q) * 2 +
+            (5 if q in note["text"].lower().split() else 0) +
+            (15 if note.get("tag") and q in note["tag"].lower() else 0)
+            for note in notes
+        ])
+        max_rel = raw_relevance.max()
+        relevance_scores = raw_relevance / max_rel if max_rel > 0 else np.zeros(n)
 
-            # Score 3: Tag match is worth a lot
-            if note.get("tag") and q in note["tag"].lower():
-                score += 15  # tag match = 15 points
+        # ── 4. Combine and rank ───────────────────────────────────
+        combined = recency_scores + importance_scores + relevance_scores
+        top_indices = combined.argsort()[::-1][:top_k]
 
-                # Extra bonus if tag is exact match
-                if q == note["tag"].lower():
-                    score += 10  # exact tag match = 10 more points
-
-            if score > 0:
-                note_with_score = note.copy()  # don't modify original
-                note_with_score["score"] = score
-                scored_results.append(note_with_score)
-
-        scored_results.sort(key=lambda n: n["score"], reverse=True)
-        return scored_results
+        return [notes[i] for i in top_indices]
 
     def get_all_tags(self):
         """Return a sorted list of all unique tags."""

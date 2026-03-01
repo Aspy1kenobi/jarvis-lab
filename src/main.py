@@ -1,5 +1,5 @@
 from colors import green, blue, red, cyan, yellow, success, error, tag, bold
-from memory import add_note, list_notes, search_notes, delete_last_note, delete_all_notes, get_all_tags, notes_by_tag, load_memory
+from memory import add_note, list_notes, search_notes, delete_last_note, delete_all_notes, get_all_tags, notes_by_tag, load_memory, retrieve 
 from agents import run_lab_meeting
 from datetime import datetime
 from research_mode import cmd_experiment, cmd_idea, cmd_decision, cmd_progress, cmd_review, cmd_todo
@@ -21,6 +21,7 @@ def print_help():
     print("  imagine [prompt]   - generate creative text with LLM")
     print("  context on/off     - toggle context mode")
     print("  lab <topic>        - run multi-agent lab meeting")
+    print("  retrieve           - run numpy based retrieval scoring")
     
     print("\n🔬 Research Mode:")
     print("  experiment         - log research experiment")
@@ -342,6 +343,7 @@ def main():
         "export": cmd_export,
         "imagine": cmd_imagine,
         "lab": None,
+        "retrieve": retrieve,
         "experiment": cmd_experiment,
         "idea": cmd_idea,
         "decision": cmd_decision,
