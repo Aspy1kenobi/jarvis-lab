@@ -4,16 +4,17 @@ from experiment_logger import log_result
 from scorer import score_response
 
 
-def run_debate(topic: str, rounds: int = 3) -> list[dict]:
+def run_debate(topic: str, rounds: int = 3, filename: str = "experiment_results.csv") -> tuple[str, list[dict]]:
     """
     Run a multi-agent debate on a given topic for specified number of rounds.
 
     Args:
         topic: The debate topic/question
         rounds: Number of debate rounds to run (default: 3)
+        filename: CSV file to log results to (default: "experiment_results.csv")
 
     Returns:
-        List of dictionaries, each containing round, agent, and response
+        Tuple of (experiment_id, list of dictionaries containing round, agent, and response)
     """
     experiment_id = f"debate_{uuid.uuid4().hex[:6]}"
 
@@ -39,9 +40,10 @@ def run_debate(topic: str, rounds: int = 3) -> list[dict]:
             log_result(
                 experiment_id=experiment_id,
                 agent=agent_name,
-                round=round_num,
-                quality_score=quality_score,  # Now using actual score instead of placeholder
-                phase=1,
+                round_num=round_num,
+                quality_score=quality_score,
+                phase="structured_debate",  # Using string instead of int to match logger expectations
+                filename=filename  # Pass the filename through
             )
 
             all_responses.append({
@@ -53,6 +55,19 @@ def run_debate(topic: str, rounds: int = 3) -> list[dict]:
             context += f"Round {round_num} - {agent_name}: {response}\n\n"
 
             print(f"{agent_name}: {response[:100]}...")
-            print(f"  Quality score: {quality_score:.3f}")  # Optional: print score for visibility
+            print(f"  Quality score: {quality_score:.3f}")
 
-    return all_responses
+    return experiment_id, all_responses
+
+
+if __name__ == "__main__":
+    experiment_id, results = run_debate("Should we colonize Mars?", rounds=2)
+
+    print("\n" + "=" * 50)
+    print("DEBATE SUMMARY")
+    print("=" * 50)
+    for entry in results:
+        print(f"Round {entry['round']} - {entry['agent']}:")
+        print(f"{entry['response']}\n")
+    
+    print(f"\nExperiment ID: {experiment_id}")

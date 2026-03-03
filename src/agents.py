@@ -62,13 +62,18 @@ def agent_skeptic(topic: str, context: str = "") -> str:
 
 @log_call
 def agent_ethicist(topic: str, context: str = "") -> str:
-    return (
-        f"[Ethicist]\n"
+    output = f"[ethicist]\n"
+    
+    if context:
+        output += f"What precedent does this set: {context}\n"
+
+    output +=(
         f"Safety / ethics check for: {topic}\n"
         f"- Does this increase harm or risk?\n"
         f"- Are there privacy issues?\n"
         f"- Can we add a human approval step?\n"
     )
+    return output
 
 @log_call
 def agent_imagination(topic: str, context: str = "") -> str:
