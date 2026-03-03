@@ -1,6 +1,7 @@
 import uuid
 from agents import agent_planner, agent_engineer, agent_skeptic, agent_ethicist
 from experiment_logger import log_result
+from scorer import score_response
 
 
 def run_debate(topic: str, rounds: int = 3) -> list[dict]:
@@ -31,12 +32,15 @@ def run_debate(topic: str, rounds: int = 3) -> list[dict]:
 
         for agent_name, agent_func in agents:
             response = agent_func(topic, context)
+            
+            # Calculate quality score using the scorer function
+            quality_score = score_response(response, topic)
 
             log_result(
                 experiment_id=experiment_id,
                 agent=agent_name,
                 round=round_num,
-                quality_score=0.0,
+                quality_score=quality_score,  # Now using actual score instead of placeholder
                 phase=1,
             )
 
@@ -49,16 +53,6 @@ def run_debate(topic: str, rounds: int = 3) -> list[dict]:
             context += f"Round {round_num} - {agent_name}: {response}\n\n"
 
             print(f"{agent_name}: {response[:100]}...")
+            print(f"  Quality score: {quality_score:.3f}")  # Optional: print score for visibility
 
     return all_responses
-
-
-if __name__ == "__main__":
-    results = run_debate("Should we colonize Mars?", rounds=2)
-
-    print("\n" + "=" * 50)
-    print("DEBATE SUMMARY")
-    print("=" * 50)
-    for entry in results:
-        print(f"Round {entry['round']} - {entry['agent']}:")
-        print(f"{entry['response']}\n")

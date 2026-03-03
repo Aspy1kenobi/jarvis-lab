@@ -124,6 +124,11 @@
       "text": "Add reflection mechanism to agents (synthesize past experiences)",
       "tag": "todo",
       "timestamp": "2026-02-17T21:41:44"
+    },
+    {
+      "text": "“Multi-agent systems increase reasoning surface area.”",
+      "tag": "hypothesis",
+      "timestamp": "2026-03-03T07:02:38"
     }
   ]
 }
