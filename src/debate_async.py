@@ -57,17 +57,14 @@ async def agent_engineer(topic: str, context: str = "") -> str:
 
 @log_call
 async def agent_skeptic(topic: str, context: str = "") -> str:
-    await asyncio.sleep(1)
-    output = f"[Skeptic]\n"
-    if context:
-        output += f"Based on your notes:{context}\n"
-    output += (
-        f"Questions / risks about: {topic}\n"
-        f"- What assumptions might be wrong?\n"
-        f"- What could fail silently?\n"
-        f"- How do we know it works?\n"
-    )
-    return output
+    from config import config
+    from llm_client import call_ollama
+    from prompts import build_messages
+
+    messages = build_messages("skeptic", topic, context)
+    text, usage = await call_ollama(messages, config)
+    logger.debug("[skeptic] eval_count=%d", usage["eval_count"])
+    return f"[Skeptic]\n{text}"
 
 
 @log_call
