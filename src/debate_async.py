@@ -87,13 +87,14 @@ async def process_agent(
     all_responses: list,
 ) -> None:
     response = await agent_func(topic, context)
-    quality_score = score_response(response, topic)
+    quality_score, scoring_path = score_response(response, topic, context)
     log_result(
         experiment_id=experiment_id,
         agent=agent_name,
         round_num=round_num,
         quality_score=quality_score,
         phase="async_debate",
+        scoring_path=scoring_path,
         filename=filename,
     )
     all_responses.append({
@@ -101,7 +102,7 @@ async def process_agent(
         "agent": agent_name,
         "response": response,
     })
-    print(f"  ✓ {agent_name}: {response[:60]}... (score: {quality_score:.3f})")
+    print(f"  ✓ {agent_name}: {response[:60]}... (score: {quality_score:.3f}, path: {scoring_path})")
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -142,26 +143,33 @@ async def run_debate_async(
             )
             for name, func in agents
         ]
-        await asyncio.gather(*tasks)
+        # return_exceptions=True prevents one agent timeout from crashing the
+        # entire round — each task's result (or exception) is handled independently.
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+
+        # Log any per-agent failures without halting the round
+        for (name, _), result in zip(agents, results):
+            if isinstance(result, Exception):
+                logger.error("[%s] failed in round %d: %s", name, round_num, result)
 
         # Build context from this round's responses (in agent list order)
         for name, _ in agents:
-            entry = next(r for r in all_responses
-                         if r["round"] == round_num and r["agent"] == name)
-            context += f"Round {round_num} - {name}: {entry['response']}\n\n"
+            entry = next(
+                (r for r in all_responses if r["round"] == round_num and r["agent"] == name),
+                None,
+            )
+            if entry:
+                context += f"Round {round_num} - {name}: {entry['response']}\n\n"
 
         round_elapsed = time.perf_counter() - round_start
         print(f"--- Round {round_num} completed in {round_elapsed:.2f}s ---")
 
     total_time = time.perf_counter() - start_time
-    theoretical_min = rounds * 1.0
 
     print("\n" + "=" * 70)
     print("ASYNC DEBATE COMPLETE")
     print("=" * 70)
     print(f"Total elapsed time:      {total_time:.2f}s")
-    print(f"Theoretical minimum:     {theoretical_min:.2f}s")
-    print(f"Efficiency:              {theoretical_min / total_time * 100:.1f}%")
     print(f"Experiment ID:           {experiment_id}")
     print("=" * 70)
 
@@ -183,6 +191,8 @@ def run_debate_sync(
 
 # ═══════════════════════════════════════════════════════════════
 # LAB MEETING (async version, backward-compatible entry point)
+# Note: no return_exceptions here — lab meeting is interactive and
+# a partial result set is more confusing than a clean failure.
 # ═══════════════════════════════════════════════════════════════
 
 def run_lab_meeting(topic: str, context: str = "") -> str:
