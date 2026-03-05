@@ -5,6 +5,9 @@ import logging
 import functools
 from experiment_logger import log_result
 from scorer import score_response
+from config import config
+from llm_client import call_ollama
+from prompts import build_messages
 
 logger = logging.getLogger(__name__)
 
@@ -23,44 +26,22 @@ def log_call(func):
 
 @log_call
 async def agent_planner(topic: str, context: str = "") -> str:
-    await asyncio.sleep(1)
-    output = (
-        f"[Planner]\n"
-        f"Goal: Make progress on: {topic}\n"
-    )
-    if context:
-        output += f"\nConsidering your recent activity:{context}\n"
-    output += (
-        f"Plan:\n"
-        f"1) Define what success looks like\n"
-        f"2) List constraints and resources\n"
-        f"3) Break into 3 small tasks\n"
-        f"4) Choose the next action you can do in 15 minutes\n"
-    )
-    return output
+    messages = build_messages("planner", topic, context)
+    text, usage = await call_ollama(messages, config)
+    logger.debug("[planner] eval_count=%d", usage["eval_count"])
+    return f"[Planner]\n{text}"
 
 
 @log_call
 async def agent_engineer(topic: str, context: str = "") -> str:
-    await asyncio.sleep(1)
-    output = f"[Engineer]\n"
-    if context:
-        output += f"Looking at what you've been working on:{context}\n"
-    output += (
-        f"Implementation ideas for: {topic}\n"
-        f"- Start with a minimal prototype\n"
-        f"- Add logging + tests early\n"
-        f"- Keep modules small and readable\n"
-    )
-    return output
+    messages = build_messages("engineer", topic, context)
+    text, usage = await call_ollama(messages, config)
+    logger.debug("[engineer] eval_count=%d", usage["eval_count"])
+    return f"[Engineer]\n{text}"
 
 
 @log_call
 async def agent_skeptic(topic: str, context: str = "") -> str:
-    from config import config
-    from llm_client import call_ollama
-    from prompts import build_messages
-
     messages = build_messages("skeptic", topic, context)
     text, usage = await call_ollama(messages, config)
     logger.debug("[skeptic] eval_count=%d", usage["eval_count"])
@@ -69,17 +50,10 @@ async def agent_skeptic(topic: str, context: str = "") -> str:
 
 @log_call
 async def agent_ethicist(topic: str, context: str = "") -> str:
-    await asyncio.sleep(1)
-    output = f"[Ethicist]\n"
-    if context:
-        output += f"What precedent does this set: {context}\n"
-    output += (
-        f"Safety / ethics check for: {topic}\n"
-        f"- Does this increase harm or risk?\n"
-        f"- Are there privacy issues?\n"
-        f"- Can we add a human approval step?\n"
-    )
-    return output
+    messages = build_messages("ethicist", topic, context)
+    text, usage = await call_ollama(messages, config)
+    logger.debug("[ethicist] eval_count=%d", usage["eval_count"])
+    return f"[Ethicist]\n{text}"
 
 
 @log_call
