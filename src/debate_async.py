@@ -11,6 +11,13 @@ from prompts import build_messages
 
 logger = logging.getLogger(__name__)
 
+# ═══════════════════════════════════════════════════════════════
+# EXECUTION CONSTANTS
+# Both become parameters when you want to sweep them experimentally.
+# ═══════════════════════════════════════════════════════════════
+EXECUTION_MODE = "sequential"
+RESPONSE_TRUNCATE_CHARS = 500
+
 
 def log_call(func):
     @functools.wraps(func)
@@ -76,9 +83,12 @@ async def agent_imagination(topic: str, context: str = "") -> str:
 def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
     """
     Build context string from the last `window` rounds of history.
+    Each response is truncated to RESPONSE_TRUNCATE_CHARS characters to stay
+    within Ollama's 4096-token context ceiling. Truncated responses are marked
+    with '... [truncated]' so it's visible in raw debate transcripts.
+
     Returns (context_string, window_label) where window_label records
     which rounds are included for CSV logging.
-
     Round 1 always receives empty context — label is explicit about why.
     """
     if not round_history:
@@ -86,11 +96,14 @@ def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
 
     rounds_present = sorted(set(e["round"] for e in round_history))
     rounds_in_window = rounds_present[-window:]
-
     entries = [e for e in round_history if e["round"] in rounds_in_window]
+
     context = ""
     for e in entries:
-        context += f"Round {e['round']} - {e['name']}: {e['response']}\n\n"
+        truncated = e["response"][:RESPONSE_TRUNCATE_CHARS]
+        if len(e["response"]) > RESPONSE_TRUNCATE_CHARS:
+            truncated += "... [truncated]"
+        context += f"Round {e['round']} - {e['name']}: {truncated}\n\n"
 
     label = f"rounds_{rounds_in_window[0]}-{rounds_in_window[-1]}"
     return context, label
@@ -98,9 +111,8 @@ def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
 
 # ═══════════════════════════════════════════════════════════════
 # PROCESS HELPER
-# NOTE: all_responses is a shared list mutated by concurrent tasks.
-# This is safe in asyncio (single-threaded event loop) but would
-# require a lock if moved to ThreadPoolExecutor or ProcessPoolExecutor.
+# NOTE: all_responses is a shared list. Safe in asyncio's single-threaded
+# event loop; would need a lock under ThreadPoolExecutor or multiprocessing.
 # ═══════════════════════════════════════════════════════════════
 
 async def process_agent(
@@ -124,6 +136,7 @@ async def process_agent(
         phase="async_debate",
         scoring_path=scoring_path,
         context_window=context_window,
+        execution_mode=EXECUTION_MODE,
         filename=filename,
     )
     all_responses.append({
@@ -159,31 +172,29 @@ async def run_debate_async(
 
     print("=" * 70)
     print(f"ASYNC DEBATE STARTING: '{topic}'")
-    print(f"Rounds: {rounds} | Agents: {len(agents)} | Context window: {context_window} round(s)")
+    print(f"Rounds: {rounds} | Agents: {len(agents)} | "
+          f"Context window: {context_window} round(s) | Mode: {EXECUTION_MODE}")
     print("=" * 70)
 
     for round_num in range(1, rounds + 1):
         round_start = time.perf_counter()
 
         context, window_label = build_context(round_history, context_window)
-        print(f"\n--- Round {round_num} (starting at {round_start - start_time:.2f}s, context: {window_label}) ---")
+        print(f"\n--- Round {round_num} "
+              f"(starting at {round_start - start_time:.2f}s, context: {window_label}) ---")
 
-        tasks = [
-            asyncio.create_task(
-                process_agent(name, func, topic, context, round_num,
-                              experiment_id, filename, all_responses,
-                              context_window=window_label)
-            )
-            for name, func in agents
-        ]
-        # return_exceptions=True prevents one agent timeout from crashing the
-        # entire round — each task's result (or exception) is handled independently.
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-
-        # Log any per-agent failures without halting the round
-        for (name, _), result in zip(agents, results):
-            if isinstance(result, Exception):
-                logger.error("[%s] failed in round %d: %s", name, round_num, result)
+        # Sequential execution: each agent awaits completion before the next starts.
+        # With a single Ollama instance, parallel firing serializes anyway and causes
+        # timeout cascades — sequential is both correct and faster in practice.
+        for name, func in agents:
+            try:
+                await process_agent(
+                    name, func, topic, context, round_num,
+                    experiment_id, filename, all_responses,
+                    context_window=window_label,
+                )
+            except Exception as e:
+                logger.error("[%s] failed in round %d: %s", name, round_num, e)
 
         # Append this round's successful responses to history
         for name, _ in agents:
@@ -212,17 +223,6 @@ async def run_debate_async(
 
     return experiment_id, all_responses
 
-    total_time = time.perf_counter() - start_time
-
-    print("\n" + "=" * 70)
-    print("ASYNC DEBATE COMPLETE")
-    print("=" * 70)
-    print(f"Total elapsed time:      {total_time:.2f}s")
-    print(f"Experiment ID:           {experiment_id}")
-    print("=" * 70)
-
-    return experiment_id, all_responses
-
 
 # ═══════════════════════════════════════════════════════════════
 # SYNCHRONOUS WRAPPER
@@ -231,10 +231,11 @@ async def run_debate_async(
 def run_debate_sync(
     topic: str,
     rounds: int = 3,
+    context_window: int = 2,
     filename: str = "experiment_results.csv",
 ) -> tuple[str, list[dict]]:
     """Synchronous entry point for callers that can't use await."""
-    return asyncio.run(run_debate_async(topic, rounds, filename))
+    return asyncio.run(run_debate_async(topic, rounds, context_window, filename))
 
 
 # ═══════════════════════════════════════════════════════════════

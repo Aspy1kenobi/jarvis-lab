@@ -10,6 +10,7 @@ def log_result(
     phase,
     scoring_path: str = "3-component",
     context_window: str = "round_1_no_context",
+    execution_mode: str = "sequential",
     filename: str = "experiment_results.csv",
 ):
     """
@@ -21,8 +22,9 @@ def log_result(
     - round_num: int
     - quality_score: float
     - phase: str
-    - scoring_path: str — "3-component" or "4-component"
+    - scoring_path: str   — "3-component" or "4-component"
     - context_window: str — e.g. "round_1_no_context", "rounds_1-2"
+    - execution_mode: str — "sequential" or "parallel"
     - filename: str
     """
     timestamp = datetime.now().isoformat()
@@ -35,6 +37,7 @@ def log_result(
         "phase": phase,
         "scoring_path": scoring_path,
         "context_window": context_window,
+        "execution_mode": execution_mode,
         "timestamp": timestamp,
     }])
 

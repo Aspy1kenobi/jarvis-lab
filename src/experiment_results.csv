@@ -31,3 +31,9 @@ debate_async_b5dd40,ethicist,2,0.8039772727272727,async_debate,4-component,2026-
 debate_async_b5dd40,skeptic,2,0.7919365284974094,async_debate,4-component,2026-03-05T19:04:07.035954
 debate_async_b5dd40,engineer,3,0.782625786163522,async_debate,4-component,2026-03-05T19:05:04.155399
 debate_async_b5dd40,skeptic,3,0.7958776595744681,async_debate,4-component,2026-03-05T19:05:49.052332
+debate_async_4b7639,planner,1,0.7083333333333334,async_debate,3-component,round_1_no_context,2026-03-06T11:05:05.094674
+debate_async_4b7639,engineer,1,0.7916666666666666,async_debate,3-component,round_1_no_context,2026-03-06T11:05:29.683397
+debate_async_4b7639,skeptic,1,0.75,async_debate,3-component,round_1_no_context,2026-03-06T11:05:58.617342
+debate_async_4b7639,engineer,2,0.7539225941422594,async_debate,4-component,rounds_1-1,2026-03-06T11:07:28.738048
+debate_async_4b7639,planner,2,0.7578855140186915,async_debate,4-component,rounds_1-1,2026-03-06T11:08:27.163866
+debate_async_4b7639,skeptic,3,0.7578441295546559,async_debate,4-component,rounds_1-2,2026-03-06T11:09:59.798644
