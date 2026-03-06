@@ -70,6 +70,33 @@ async def agent_imagination(topic: str, context: str = "") -> str:
 
 
 # ═══════════════════════════════════════════════════════════════
+# CONTEXT WINDOW
+# ═══════════════════════════════════════════════════════════════
+
+def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
+    """
+    Build context string from the last `window` rounds of history.
+    Returns (context_string, window_label) where window_label records
+    which rounds are included for CSV logging.
+
+    Round 1 always receives empty context — label is explicit about why.
+    """
+    if not round_history:
+        return "", "round_1_no_context"
+
+    rounds_present = sorted(set(e["round"] for e in round_history))
+    rounds_in_window = rounds_present[-window:]
+
+    entries = [e for e in round_history if e["round"] in rounds_in_window]
+    context = ""
+    for e in entries:
+        context += f"Round {e['round']} - {e['name']}: {e['response']}\n\n"
+
+    label = f"rounds_{rounds_in_window[0]}-{rounds_in_window[-1]}"
+    return context, label
+
+
+# ═══════════════════════════════════════════════════════════════
 # PROCESS HELPER
 # NOTE: all_responses is a shared list mutated by concurrent tasks.
 # This is safe in asyncio (single-threaded event loop) but would
@@ -85,6 +112,7 @@ async def process_agent(
     experiment_id: str,
     filename: str,
     all_responses: list,
+    context_window: str = "round_1_no_context",
 ) -> None:
     response = await agent_func(topic, context)
     quality_score, scoring_path = score_response(response, topic, context)
@@ -95,6 +123,7 @@ async def process_agent(
         quality_score=quality_score,
         phase="async_debate",
         scoring_path=scoring_path,
+        context_window=context_window,
         filename=filename,
     )
     all_responses.append({
@@ -112,6 +141,7 @@ async def process_agent(
 async def run_debate_async(
     topic: str,
     rounds: int = 3,
+    context_window: int = 2,
     filename: str = "experiment_results.csv",
 ) -> tuple[str, list[dict]]:
     start_time = time.perf_counter()
@@ -125,21 +155,24 @@ async def run_debate_async(
     ]
 
     all_responses = []
-    context = ""
+    round_history: list[dict] = []
 
     print("=" * 70)
     print(f"ASYNC DEBATE STARTING: '{topic}'")
-    print(f"Rounds: {rounds} | Agents: {len(agents)}")
+    print(f"Rounds: {rounds} | Agents: {len(agents)} | Context window: {context_window} round(s)")
     print("=" * 70)
 
     for round_num in range(1, rounds + 1):
         round_start = time.perf_counter()
-        print(f"\n--- Round {round_num} (starting at {round_start - start_time:.2f}s) ---")
+
+        context, window_label = build_context(round_history, context_window)
+        print(f"\n--- Round {round_num} (starting at {round_start - start_time:.2f}s, context: {window_label}) ---")
 
         tasks = [
             asyncio.create_task(
                 process_agent(name, func, topic, context, round_num,
-                              experiment_id, filename, all_responses)
+                              experiment_id, filename, all_responses,
+                              context_window=window_label)
             )
             for name, func in agents
         ]
@@ -152,17 +185,32 @@ async def run_debate_async(
             if isinstance(result, Exception):
                 logger.error("[%s] failed in round %d: %s", name, round_num, result)
 
-        # Build context from this round's responses (in agent list order)
+        # Append this round's successful responses to history
         for name, _ in agents:
             entry = next(
                 (r for r in all_responses if r["round"] == round_num and r["agent"] == name),
                 None,
             )
             if entry:
-                context += f"Round {round_num} - {name}: {entry['response']}\n\n"
+                round_history.append({
+                    "round": round_num,
+                    "name": name,
+                    "response": entry["response"],
+                })
 
         round_elapsed = time.perf_counter() - round_start
         print(f"--- Round {round_num} completed in {round_elapsed:.2f}s ---")
+
+    total_time = time.perf_counter() - start_time
+
+    print("\n" + "=" * 70)
+    print("ASYNC DEBATE COMPLETE")
+    print("=" * 70)
+    print(f"Total elapsed time:      {total_time:.2f}s")
+    print(f"Experiment ID:           {experiment_id}")
+    print("=" * 70)
+
+    return experiment_id, all_responses
 
     total_time = time.perf_counter() - start_time
 

@@ -9,6 +9,7 @@ def log_result(
     quality_score,
     phase,
     scoring_path: str = "3-component",
+    context_window: str = "round_1_no_context",
     filename: str = "experiment_results.csv",
 ):
     """
@@ -21,6 +22,7 @@ def log_result(
     - quality_score: float
     - phase: str
     - scoring_path: str — "3-component" or "4-component"
+    - context_window: str — e.g. "round_1_no_context", "rounds_1-2"
     - filename: str
     """
     timestamp = datetime.now().isoformat()
@@ -32,6 +34,7 @@ def log_result(
         "quality_score": quality_score,
         "phase": phase,
         "scoring_path": scoring_path,
+        "context_window": context_window,
         "timestamp": timestamp,
     }])
 

@@ -22,3 +22,12 @@ debate_async_4d2529,planner,3,0.7868978805394989,async_debate,2026-03-05T14:50:1
 debate_async_4d2529,engineer,3,0.7873163186388245,async_debate,2026-03-05T14:50:17.453953
 debate_async_4d2529,ethicist,3,0.7949015063731171,async_debate,2026-03-05T14:50:17.480449
 debate_async_4d2529,skeptic,3,0.6241496598639455,async_debate,2026-03-05T14:51:07.490192
+debate_async_b5dd40,skeptic,1,0.6666666666666666,async_debate,3-component,2026-03-05T19:00:58.954130
+debate_async_b5dd40,engineer,1,0.7916666666666666,async_debate,3-component,2026-03-05T19:01:25.542955
+debate_async_b5dd40,ethicist,1,0.7916666666666666,async_debate,3-component,2026-03-05T19:01:47.981924
+debate_async_b5dd40,planner,1,0.8333333333333334,async_debate,3-component,2026-03-05T19:02:11.478886
+debate_async_b5dd40,engineer,2,0.8091463414634146,async_debate,4-component,2026-03-05T19:02:48.896688
+debate_async_b5dd40,ethicist,2,0.8039772727272727,async_debate,4-component,2026-03-05T19:03:23.283768
+debate_async_b5dd40,skeptic,2,0.7919365284974094,async_debate,4-component,2026-03-05T19:04:07.035954
+debate_async_b5dd40,engineer,3,0.782625786163522,async_debate,4-component,2026-03-05T19:05:04.155399
+debate_async_b5dd40,skeptic,3,0.7958776595744681,async_debate,4-component,2026-03-05T19:05:49.052332
