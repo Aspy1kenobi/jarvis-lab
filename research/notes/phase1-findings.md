@@ -43,3 +43,20 @@ perspectives and genuine emergence.
 2. 2-round responsiveness test: did round 2 output change meaningfully from
    round 1? Direct inspection, not just scores.
 3. Phase 3 is only worth running if all four agents are actually in the room.
+
+## GPT-2 Debate Experiments (parallel track, pre-JARVIS)
+- Experiment 0 baseline: 0/49 tests passed (0%)
+- Experiment 1 two-agent debate: 26/49 passed (53%)
+- Mechanism: refiner prompt includes logic hint — GPT-2 pattern-completes toward solution
+- 4 tasks stuck at 0%: fibonacci, merge_sorted, is_prime, binary_search
+  All require multi-line logic invention, not pattern completion
+- Ceiling finding: debate works when models can complete toward known solution
+  GPT-2 debate is prompt engineering, not reasoning
+
+## Cross-track Synthesis
+- Both tracks confirm: structured collaboration improves output quality
+- Mechanism differs by capability level:
+  GPT-2: pattern completion toward hint (measurable, ceiling-limited)
+  Ollama: consideration surfacing without synthesis (capable, instrument-limited)
+- Pattern completion is not reasoning. Surface area is not synthesis.
+- The collaboration question requires capable models AND a valid synthesis metric
