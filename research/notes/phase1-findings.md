@@ -22,3 +22,24 @@ Weak positive signal, but mechanism is wrong.
 - Does memory change templating behavior in procedural agents?
 - Can engagement metric be redesigned to reward novel-but-contextual arguments?
 - Control for ordering: planner always sets frame — randomize agent order in Phase 4
+## The Real Research Question (identified post-experiment)
+The ethicist raised that an MVP approach might be ethically impermissible —
+not just risky, but categorically inappropriate. No other agent responded.
+In a human debate that point forces a response: defend the framing or revise it.
+Here it sat unacknowledged.
+
+This is the gap: between surfacing a consideration and the system doing 
+something with it. Phase 1 tests whether agents surface more considerations
+than a single agent. They do. But surfacing is not collaboration.
+
+The Phase 3 question is not "do agents coordinate without explicit structure?"
+It's "under what conditions does a surfaced consideration actually change 
+another agent's reasoning?" That's the difference between parallelized 
+perspectives and genuine emergence.
+
+## Phase 3 Prerequisites (revised based on findings)
+1. Fix planner and engineer prompts — verify round-over-round responsiveness
+   before removing structure. Can't test emergence with stateless agents.
+2. 2-round responsiveness test: did round 2 output change meaningfully from
+   round 1? Direct inspection, not just scores.
+3. Phase 3 is only worth running if all four agents are actually in the room.
