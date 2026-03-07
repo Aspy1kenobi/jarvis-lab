@@ -1,4 +1,5 @@
 import asyncio
+import sys
 import time
 import uuid
 import logging
@@ -13,10 +14,11 @@ logger = logging.getLogger(__name__)
 
 # ═══════════════════════════════════════════════════════════════
 # EXECUTION CONSTANTS
-# Both become parameters when you want to sweep them experimentally.
+# Become parameters when you want to sweep them experimentally.
 # ═══════════════════════════════════════════════════════════════
 EXECUTION_MODE = "sequential"
 RESPONSE_TRUNCATE_CHARS = 500
+PHASE = "async_debate"
 
 
 def log_call(func):
@@ -127,13 +129,21 @@ async def process_agent(
     context_window: str = "round_1_no_context",
 ) -> None:
     response = await agent_func(topic, context)
+
+    # Persist full response text for manual hypothesis evaluation
+    transcript_file = f"transcript_{experiment_id}.txt"
+    with open(transcript_file, 'a') as f:
+        f.write(f"=== Round {round_num} | {agent_name} ===\n")
+        f.write(response)
+        f.write("\n\n")
+
     quality_score, scoring_path = score_response(response, topic, context)
     log_result(
         experiment_id=experiment_id,
         agent=agent_name,
         round_num=round_num,
         quality_score=quality_score,
-        phase="async_debate",
+        phase=PHASE,
         scoring_path=scoring_path,
         context_window=context_window,
         execution_mode=EXECUTION_MODE,
@@ -259,7 +269,5 @@ def run_lab_meeting(topic: str, context: str = "") -> str:
 
 
 if __name__ == "__main__":
-    asyncio.run(run_debate_async(
-        topic="Should we implement a four-day work week?",
-        rounds=3,
-    ))
+    topic = sys.argv[1] if len(sys.argv) > 1 else "Should we implement a four-day work week?"
+    asyncio.run(run_debate_async(topic=topic, rounds=3))

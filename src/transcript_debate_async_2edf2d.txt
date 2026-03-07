@@ -1,0 +1,99 @@
+=== Round 1 | planner ===
+[Planner]
+Goal: Make progress on the topic.
+1) Define success
+2) List constraints
+3) Break into tasks
+4) Choose next action
+
+
+=== Round 1 | engineer ===
+[Engineer]
+Implementation ideas:
+- Start with a minimal prototype
+- Add logging and tests early
+- Keep modules small and readable
+
+
+=== Round 1 | skeptic ===
+[Skeptic]
+Concerns:
+- What assumptions are we making?
+- What could go wrong?
+- What evidence do we have?
+
+
+=== Round 1 | ethicist ===
+[Ethicist]
+Ethics check:
+- Does this increase harm or risk?
+- Are there privacy issues?
+- Can we add a human approval step?
+
+
+=== Round 2 | planner ===
+[Planner]
+Goal: Make progress on the topic.
+1) Define success
+2) List constraints
+3) Break into tasks
+4) Choose next action
+
+
+=== Round 2 | engineer ===
+[Engineer]
+Implementation ideas:
+- Start with a minimal prototype
+- Add logging and tests early
+- Keep modules small and readable
+
+
+=== Round 2 | skeptic ===
+[Skeptic]
+Concerns:
+- What assumptions are we making?
+- What could go wrong?
+- What evidence do we have?
+
+
+=== Round 2 | ethicist ===
+[Ethicist]
+Ethics check:
+- Does this increase harm or risk?
+- Are there privacy issues?
+- Can we add a human approval step?
+
+
+=== Round 3 | planner ===
+[Planner]
+Goal: Make progress on the topic.
+1) Define success
+2) List constraints
+3) Break into tasks
+4) Choose next action
+
+
+=== Round 3 | engineer ===
+[Engineer]
+Implementation ideas:
+- Start with a minimal prototype
+- Add logging and tests early
+- Keep modules small and readable
+
+
+=== Round 3 | skeptic ===
+[Skeptic]
+Concerns:
+- What assumptions are we making?
+- What could go wrong?
+- What evidence do we have?
+
+
+=== Round 3 | ethicist ===
+[Ethicist]
+Ethics check:
+- Does this increase harm or risk?
+- Are there privacy issues?
+- Can we add a human approval step?
+
+
