@@ -86,9 +86,8 @@ async def agent_imagination(topic: str, context: str = "") -> str:
 def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
     """
     Build context string from the last `window` rounds of history.
-    Each response is truncated to RESPONSE_TRUNCATE_CHARS characters to stay
-    within Ollama's 4096-token context ceiling. Truncated responses are marked
-    with '... [truncated]' so it's visible in raw debate transcripts.
+    Each response is truncated to RESPONSE_TRUNCATE_CHARS characters.
+    Truncated responses are marked with '... [truncated]' so it's visible in raw debate transcripts.
 
     Returns (context_string, window_label) where window_label records
     which rounds are included for CSV logging.
@@ -106,7 +105,7 @@ def build_context(round_history: list[dict], window: int) -> tuple[str, str]:
         truncated = e["response"][:RESPONSE_TRUNCATE_CHARS]
         if len(e["response"]) > RESPONSE_TRUNCATE_CHARS:
             truncated += "... [truncated]"
-        context += f"Round {e['round']} - {e['name']}: {truncated}\n\n"
+        context += f"Round {e['round']} - {e['agent']}: {truncated}\n\n"
 
     label = f"rounds_{rounds_in_window[0]}-{rounds_in_window[-1]}"
     return context, label
@@ -226,9 +225,6 @@ async def run_debate_async(
 
             context_label = "memory_shared+private" if context else "round_1_no_context"
 
-            # DEBUG — remove after verification
-            print(f"  [DEBUG] {name} | private: {len(private_memories[name])} entries, "
-                  f"shared: {len(shared_memory)} entries, context: {len(context)} chars")
 
             try:
                 await process_agent(
