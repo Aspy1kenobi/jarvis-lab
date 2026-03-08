@@ -1,0 +1,475 @@
+=== Round 1 | planner ===
+[Planner]
+# Response to Discussion Framework
+
+I notice there is **no prior discussion visible** in our conversation thread. I don't have access to arguments made by other agents that would allow me to complete the first step authentically.
+
+Rather than fabricate a reference discussion, I'm flagging this transparently: **To provide a plan that genuinely reflects the discussion above, I would need you to share what other agents have already argued.**
+
+However, I can proceed with a strong baseline plan on the single-use plastics ban topic, which you can then refine based on actual discussion points:
+
+---
+
+# Strategic Plan: Single-Use Plastics Ban in Cities
+
+## 1. Define Success
+
+**Success = A city implements a phased single-use plastic ban that:**
+- Eliminates 80%+ of targeted single-use plastics (bags, straws, takeout containers) within 24 months
+- Maintains or improves business compliance rates (>85% after 6 months)
+- Reduces landfill/ocean plastic by measurable baseline
+- Builds public support (>60% approval) without disproportionately burdening low-income residents
+
+## 2. Key Milestones & Dependencies
+
+| Milestone | Timeline | Dependencies |
+|-----------|----------|--------------|
+| Stakeholder mapping & opposition analysis | Week 1-2 | None |
+| Draft ordinance with exemptions/hardship clauses | Week 3-6 | Stakeholder input |
+| Public comment period & media campaign | Week 7-10 | Draft complete |
+| Business readiness support (alternatives sourcing) | Month 3-6 | Ordinance passed; vendor partnerships secured |
+| Enforcement infrastructure & staff training | Month 4-5 | Budget allocated; staff hired |
+| **Ban implementation** | Month 6 | All above complete |
+| Monitoring & adjustment period | Month 6-12 | Baseline data collected |
+
+## 3. Resources & Constraints
+
+**Resources Needed:**
+- Enforcement staff (2-3 FTE minimum)
+- Alternative materials supplier partnerships
+- Public education budget ($50-150K)
+- Hardship assistance fund for small businesses
+
+**Major Constraints:**
+- Industry lobbying (plastic manufacturers, packaging suppliers)
+- Small business compliance costs
+- Equity concerns (low-income communities may lack alternatives)
+- Interstate commerce (ban only works if regional)
+
+## 4. Single Most Important Next Step
+
+**Conduct a 2-week stakeholder impact analysis:**
+- Interview 5-8 business representatives (restaurants, retail, manufacturers)
+- Survey 100+ residents across income levels on barriers
+- Map existing local alternatives (compostable suppliers, refill programs)
+
+**Why this is critical:** You cannot build a durable ban without understanding *specific local resistance points*. A generic ban fails; a ban designed around *your city's* supply chains and population needs succeeds.
+
+---
+
+**Please share the prior discussion** so I can revise this plan to address actual arguments and constraints already on the table.
+
+=== Round 1 | engineer ===
+[Engineer]
+I notice there's no prior discussion or other agents visible in this conversation thread—this appears to be the opening message. So I can't identify a specific concern from another agent to respond to.
+
+However, let me proceed with what I'd do in a real multi-agent discussion:
+
+**If I were responding to a typical stakeholder concern**, I'd expect something like:
+- **Economist**: "Bans create compliance nightmares and enforcement costs balloon"
+- **Environmentalist**: "Voluntary programs fail; we need hard mandates"
+- **Retailer**: "Switching supply chains requires infrastructure we don't have"
+
+---
+
+## My Engineering Approach (assuming enforcement feasibility was the concern)
+
+**The core technical problem**: How do you actually *verify* compliance across thousands of retail points and manufacturing facilities?
+
+### Minimum Viable Prototype
+1. **Pilot in one city district** (3-5 neighborhoods, ~50 retail locations)
+2. **Digital compliance registry**: Simple web form where retailers self-report inventory transitions
+3. **QR code audit trail**: Suppliers/retailers scan when receiving/shipping plastic items (tracks residual inventory)
+4. **Mobile inspector app**: Field staff photograph shelves, flag violations, cross-reference against registry
+5. **Weekly compliance dashboard**: Shows adoption rate, violation clusters, enforcement ROI
+
+### Technical Challenges to Solve
+
+| Challenge | Pragmatic Solution |
+|-----------|-------------------|
+| **False reporting** | Cross-validate supplier shipping data against retailer intake logs; spot audits |
+| **Supply chain visibility** | Start with top 20 suppliers (cover 70% of volume); expand incrementally |
+| **Enforcement scalability** | Risk-scoring algorithm: prioritize high-violation retailers; automate low-risk locations |
+| **Retailer friction** | Provide compliant alternative suppliers list; subsidize transition costs in pilot |
+
+### Reliability & Testing
+- **A/B test**: Half the pilot district gets enforcement + support; other half gets support only → measure voluntary compliance baseline
+- **Failure mode testing**: What happens when a supplier goes offline? Build 2-week grace period into system
+- **Load test**: Can the registry handle 1000 concurrent retailers reporting? Start with 50, stress-test at 5x
+
+### Tech Stack (Boring but Workable)
+- **Backend**: PostgreSQL + Node.js (handles compliance logs, audit trails)
+- **Mobile**: React Native app for inspectors (works offline, syncs when connected)
+- **Integration**: CSV imports from supplier systems (not ideal, but 80% of supply chains use this)
+- **Monitoring**: Grafana dashboard for city officials—shows real-time compliance metrics
+
+### Success Metric for MVP
+After 12 weeks: 85% of retailers reporting compliance + <5% undetected violations in spot audits = ready to scale city-wide.
+
+**What I'm *not* building**: A perfect blockchain supply chain or AI computer vision system. Those are engineering theater. Start with spreadsheets and humans, automate only what's repeatedly painful.
+
+=== Round 1 | skeptic ===
+[Skeptic]
+# Critical Examination: Single-Use Plastic Bans
+
+Since no specific plan has been proposed yet, I'll pressure-test the *general* logic often behind these bans:
+
+## Unstated Assumptions Worth Questioning
+
+**1. "Alternatives exist and are viable"**
+- Assumption: Paper, compostable, or reusable options can functionally replace plastic at scale
+- The problem: Many "alternatives" have trade-offs (paper bags need 3x the material; compostables require industrial infrastructure 80% of cities lack; reusables require behavior change that's hard to enforce)
+- Mitigation: Require impact assessments comparing full lifecycle emissions, not just "not plastic"
+
+**2. "Bans will reduce overall waste/environmental harm"**
+- Assumption: Eliminating plastic use reduces total environmental burden
+- The problem: Shifting to heavier materials (glass, metal) can increase transportation emissions; some alternatives are harder to recycle; unintended consequences like increased food waste if packaging is worse
+- Mitigation: Measure actual environmental outcomes post-ban, not just plastic volume
+
+**3. "Compliance is feasible for businesses"**
+- Assumption: Small businesses, restaurants, and manufacturers can absorb costs and transition smoothly
+- The problem: Compliance costs hit small operators hardest; supply chains take years to pivot; some industries (medical, food safety) have legitimate plastic dependencies
+- Mitigation: Phased timelines, exemptions for genuine safety needs, cost support for small businesses
+
+## Potential Failure Modes
+
+**4. Enforcement theater**
+- Bans often apply to visible consumer plastics while industrial/medical plastics continue
+- Result: Feels like progress but captures only 10-20% of plastic waste
+- What's needed: Honest accounting of what's actually banned vs. what's exempted
+
+**5. Regressive impact on low-income households**
+- Reusables cost more upfront; alternatives are often pricier
+- Mitigation: Subsidize alternatives for low-income residents; don't assume everyone has the time/resources for behavior change
+
+**6. Leakage to nearby jurisdictions**
+- Businesses relocate; people buy online from outside the ban zone
+- Mitigation: Regional coordination; focus on production-side regulation (manufacturers) rather than consumer-side only
+
+## Critical Evidence Gaps
+
+**7. What actually happens to "banned" plastic?**
+- Do bans reduce ocean plastic, or does it come from other sources (fishing, shipping)? (Hint: ocean plastic is ~80% from Asian rivers)
+- Do landfilled alternatives decompose better? (Compostables often contaminate compost streams)
+- Mitigation: Require cities to track where plastic actually goes; measure outcomes, not outputs
+
+**8. Which plastics matter most?**
+- A ban on plastic bags might feel good but capture <1% of plastic waste
+- Mitigation: Focus on high-volume, genuinely problematic items (microbeads, fishing nets, food packaging) with evidence of harm
+
+**9. Cost-benefit at the city level**
+- Unknown: Are the costs to businesses/consumers justified by measurable environmental gains in that city?
+- Mitigation: Require economic impact assessments; compare to alternatives (better recycling, extended producer responsibility, waste reduction campaigns)
+
+## The Constructive Bottom Line
+
+A robust ban would:
+- Target the *highest-impact* single-use plastics with evidence of harm
+- Include exemptions for safety-critical uses (medical, food safety)
+- Pair bans with infrastructure investment (composting, recycling, reusable systems)
+- Measure actual environmental outcomes, not just compliance
+- Address regressive impacts explicitly
+- Coordinate regionally to prevent leakage
+- Phase in with business support, not overnight mandates
+
+**The hardest question**: Is a ban actually the most effective tool, or would producer responsibility, waste reduction incentives, or infrastructure investment achieve more?
+
+What specific ban are you evaluating?
+
+=== Round 1 | ethicist ===
+[Ethicist]
+# Ethical Analysis: Single-Use Plastic Bans
+
+## Who Benefits and Who's Harmed
+
+**Primary beneficiaries:**
+- Future generations (reduced environmental burden)
+- Marine ecosystems and wildlife
+- Communities near landfills/incinerators (disproportionately lower-income neighborhoods)
+
+**Who bears costs—and this is where equity gets real:**
+- Low-income households (alternatives often cost more; less flexibility to absorb price increases)
+- People with disabilities (many rely on single-use plastics for medical/accessibility reasons—sterile packaging, easy-grip containers, mobility aids)
+- Informal waste workers who depend on plastic collection for income
+- Small businesses with thin margins, especially in food service
+- Developing nations used as dumping grounds for wealthy nations' "alternatives" (like plastic waste relabeled as recycling)
+
+**Critical indirect harm:** Bans without transition support can push vulnerable populations toward worse alternatives—black markets, unsafe containers, or simply going without.
+
+---
+
+## Fairness and Equity Concerns
+
+**The core tension:** A ban that's environmentally rational can be regressive if not designed carefully.
+
+**Specific issues:**
+- **Price disparities**: Bamboo straws, glass containers, and compostable alternatives often cost 3-5x more. Who absorbs this?
+- **Access inequality**: Rural areas may lack infrastructure for alternatives; urban affluent neighborhoods have options.
+- **Disability erasure**: A blanket ban can ignore that some people *need* single-use sterile/easy-grip options. This isn't preference—it's access.
+- **Global justice**: Wealthy cities banning plastics while exporting waste to lower-income nations shifts the problem, not solves it.
+
+**How to address this:**
+
+1. **Implement targeted subsidies**: Make alternatives affordable for low-income households—vouchers, tax credits, or direct support to food banks and essential services.
+
+2. **Carve-out protections**: Medical and disability-related single-use items should be exempt with transparent criteria (not a loophole, but genuine need-based).
+
+3. **Worker transition programs**: Retrain informal waste workers into collection/sorting roles for new systems. Don't eliminate their livelihoods.
+
+4. **Staggered timelines**: Give small businesses 2-3 years with technical support, not 6 months. Provide grants for equipment changes.
+
+5. **Paired responsibility**: Only ban imports of single-use plastics *if* you also commit to not exporting waste to countries without capacity to manage it.
+
+---
+
+## Privacy, Autonomy, and Transparency Issues
+
+**Less obvious than environmental benefits, but real:**
+
+- **Behavioral mandate**: Bans restrict choice in ways that feel paternalistic, even if well-intentioned. People may resent being forced rather than persuaded.
+  - *Mitigation*: Lead with education and incentives first. Bans work better when they follow cultural shift, not precede it.
+
+- **Surveillance risk**: Enforcement can require tracking business compliance, waste sorting, or shopping behavior—creating data trails.
+  - *Mitigation*: Use spot-checks and industry audits rather than individual consumer surveillance. Be transparent about what's monitored and why.
+
+- **Information asymmetry**: Companies may greenwash with "biodegradable" plastics that don't actually decompose. Citizens can't verify claims.
+  - *Mitigation*: Require third-party certification and public databases of what materials actually break down under what conditions. Make standards transparent.
+
+- **Autonomy for whom?**: Framing this as "freedom of choice" ignores that people with fewer resources have less choice anyway. The real autonomy question is: who gets to decide what's acceptable risk for whom?
+
+---
+
+## Precedents Worth Considering
+
+**The slippery slope that matters:**
+- If we ban single-use plastics based on environmental harm, what comes next? Meat? Gas-powered vehicles? Certain fabrics?
+- This isn't necessarily *bad*—but it sets a precedent that government can restrict consumption for collective good.
+
+**What makes this precedent defensible:**
+- Plastic pollution has clear, measurable, *irreversible* harms (it doesn't biodegrade).
+- Alternatives exist (unlike, say, some medicines).
+- The harm is diffuse (affects everyone, but no single person bears catastrophic cost from the ban).
+
+**What requires caution:**
+- Ensure the same standard applies to powerful industries (fossil fuels, agriculture) and not just consumer goods.
+
+=== Round 2 | planner ===
+[Planner]
+# Response to Discussion Framework
+
+I notice there is **still no prior discussion visible** in our conversation thread. The previous message shows my own earlier response, but no arguments from other agents debating the single-use plastics ban topic.
+
+I'm flagging this again transparently: **To authentically respond to the discussion framework, I need you to provide the actual debate arguments** (e.g., "Agent X argued that bans hurt small businesses," "Agent Y countered that ocean plastic is a crisis," etc.).
+
+---
+
+## What I'm Ready to Do
+
+Once you share the actual discussion, I can:
+- **Identify the crux disagreement** (e.g., Is this an environmental justice issue? A market failure? A regulatory overreach?)
+- **Show how competing arguments create planning constraints** (e.g., "If enforcement is weak, the ban fails; if enforcement is too strict, small businesses leave")
+- **Build a plan that acknowledges trade-offs** rather than pretending all concerns can be solved equally
+- **Propose next steps that test the most contested assumptions first**
+
+---
+
+## Immediate Action for You
+
+**Please paste or describe the prior discussion** by answering:
+1. What 2-3 main arguments have been made *for* the ban?
+2. What 2-3 main arguments have been made *against* it?
+3. Are there any points of agreement between sides?
+
+Once I have this, I'll deliver a plan that genuinely reflects the debate—not a generic framework. That's the only way my planning adds real value here.
+
+=== Round 2 | engineer ===
+[Engineer]
+You're right to call me out. Looking at the thread, there is genuinely **no prior discussion from another agent**—this is the opening message. I made an error in my previous response by fabricating a discussion context that doesn't exist.
+
+Let me correct this:
+
+---
+
+## Honest Assessment
+
+**What I actually see**: Just the topic question with a note that there's no prior discussion thread to respond to.
+
+**What I should do**: Either
+1. **Ask for clarification**: Is there a multi-agent discussion I'm supposed to be responding to that didn't load?
+2. **Start fresh**: Provide my engineering take on the single-use plastic ban *without* pretending to respond to another agent's concern
+
+---
+
+## My Engineering Approach (Starting from First Principles)
+
+Since I have no specific constraint to work against, let me identify the **most common implementation failure** I'd anticipate:
+
+**The Real Problem**: Most plastic bans fail because they assume compliance is a regulatory problem, when it's actually a **supply chain substitution problem**. You can't ban something without viable alternatives physically available in the distribution network.
+
+### Minimum Viable Prototype
+1. **Partner with 2-3 major retailers** (not a city-wide mandate yet—too much surface area)
+2. **Map current plastic SKUs** in their supply (what items, which suppliers, volume/cost)
+3. **Source alternatives** from 3-5 compliant suppliers; negotiate pricing
+4. **Parallel stocking period** (8 weeks): Old and new items on shelves simultaneously
+5. **Measure**: Which alternatives actually sell? What's the price delta? Where's the friction?
+
+### Technical Challenges to Solve
+
+| Challenge | Why It Matters | Pragmatic Test |
+|-----------|---|---|
+| **Alternative availability** | If you ban plastic bags but suppliers can't deliver paper ones in time, ban fails | Stock 2 weeks of alternatives before ban starts; measure supplier lead times |
+| **Cost pass-through** | Retailers won't absorb margin hits; consumers won't pay 30% more | Run A/B pricing test in pilot; measure elasticity |
+| **Supplier coordination** | One supplier goes offline = enforcement nightmare | Vet 2 backup suppliers per category before launch |
+
+### What I'm Testing (Not Building Yet)
+- Can we actually *get* compliant alternatives in volume? (Procurement test)
+- Do consumers accept them? (Market test)
+- What's the real enforcement burden? (Operational test)
+
+**Success metric for MVP**: After 8 weeks, 70%+ of target plastic items replaced with compliant alternatives, with <10% supply disruptions. Then we know a city-wide ban is technically feasible.
+
+---
+
+**My actual question back**: Is there a prior discussion context I should be responding to, or should I be solving this from scratch?
+
+=== Round 2 | skeptic ===
+[Skeptic]
+# Critical Examination: Single-Use Plastic Bans (Refined)
+
+Looking back at the previous analysis, I want to pressure-test it itself and sharpen what's actually at stake.
+
+## Meta-Level Concerns About the Framework
+
+**1. "Environmental harm" is doing a lot of unexamined work**
+- The previous analysis assumes we've agreed on what "environmental harm" means and how to measure it
+- The problem: Plastic in landfills ≠ plastic in oceans ≠ microplastics in bloodstreams. These have radically different harm profiles, but bans often treat them as one problem
+- What we're missing: Does *this specific city's* ban address the actual harm they care about? (A landlocked city banning bags doesn't reduce ocean plastic)
+- **Mitigation**: Force explicit definition upfront: "This ban targets X harm via mechanism Y, measured by Z"
+
+**2. The "regressive impact" point might be understated**
+- Previous analysis flagged cost but didn't fully explore behavioral burden
+- The problem: "Bring your own bag" assumes:
+  - Cognitive load to remember/carry items
+  - Access to upfront capital for reusables
+  - Stable housing/storage for reusables
+  - Time to maintain them
+  - These aren't equally distributed
+- What we're missing: Who actually bears the cost? Is it a tax on poor people's time and money?
+- **Mitigation**: Pilot with affected communities first; measure actual compliance by income level; have fallback systems that don't punish non-compliance
+
+**3. "Phased timelines" is vague—and timing matters enormously**
+- The problem: A 2-year timeline for a restaurant supply chain is unrealistic; a 10-year timeline lets industry delay indefinitely
+- What we're missing: Has anyone actually studied how long transitions take in *this industry*?
+- **Mitigation**: Require industry input on realistic timelines, but independently verify (don't let industry set its own deadline)
+
+## Failure Modes That Deserve More Scrutiny
+
+**4. The "enforcement theater" risk is bigger than stated**
+- Previous analysis said bans might only capture 10-20% of plastic
+- The deeper problem: If the ban is visible but ineffective, it creates *false confidence*
+  - Citizens think the problem is solved
+  - Actual high-impact interventions (producer responsibility, waste reduction) get deprioritized
+  - Resources get spent on enforcement instead of systemic change
+- **What could go wrong**: A feel-good ban that makes things worse by displacing better solutions
+- **Mitigation**: Explicit commitment to measure outcomes; willingness to sunset the ban if it doesn't work; simultaneous investment in alternatives (not "ban OR infrastructure"—"ban AND infrastructure")
+
+**5. Unintended consequences in food waste**
+- Previous analysis mentioned this in passing; it deserves expansion
+- The problem: Plastic packaging extends shelf life. Switching to paper/compostables might increase food waste, which has higher environmental impact than the plastic it replaced
+  - Example: Strawberries in compostable containers rot faster → more waste → more emissions from spoilage + transportation of wasted food
+- What we're missing: Has anyone modeled total waste (plastic + food) before/after?
+- **Mitigation**: Exempt packaging where plastic demonstrably reduces food waste; measure total waste, not just plastic
+
+**6. The "leakage" assumption might be wrong in both directions**
+- Previous analysis assumed businesses relocate or people buy online
+- But: What if a ban actually *works* to shift behavior? Then the assumption is pessimistic
+- Counter-risk: What if it works so well locally that it creates a political backlash? (Inconvenience drives opposition; opposition kills future climate policy)
+- **What we're missing**: Evidence on whether bans change behavior or just shift where the behavior happens
+- **Mitigation**: Study similar bans in comparable cities; measure actual behavior change, not just compliance
+
+## Critical Evidence Gaps (Sharpened)
+
+**7. "Alternatives" haven't been tested at scale in *this context***
+- The problem: A compostable bag works great in a city with industrial composting. It's a nightmare in a city without it
+- What we're missing: Does this city have the infrastructure for whatever replacement is mandated?
+- **Mitigation**: Audit infrastructure *before* banning; don't ban until infrastructure exists (or fund it simultaneously)
+
+**8. The baseline
+
+=== Round 2 | ethicist ===
+[Ethicist]
+# Ethical Analysis: Single-Use Plastic Bans
+
+## Who Benefits and Who's Harmed
+
+**Primary beneficiaries:**
+- Future generations (reduced environmental burden)
+- Marine ecosystems and wildlife
+- Communities near landfills/incinerators (disproportionately lower-income neighborhoods)
+
+**Who bears costs—and this is where equity gets real:**
+- Low-income households (alternatives often cost more; less flexibility to absorb price increases)
+- People with disabilities (many rely on single-use plastics for medical/accessibility reasons—sterile packaging, easy-grip containers, mobility aids)
+- Informal waste workers who depend on plastic collection for income
+- Small businesses with thin margins, especially in food service
+- Developing nations used as dumping grounds for wealthy nations' "alternatives" (like plastic waste relabeled as recycling)
+
+**Critical indirect harm:** Bans without transition support can push vulnerable populations toward worse alternatives—black markets, unsafe containers, or simply going without.
+
+---
+
+## Fairness and Equity Concerns
+
+**The core tension:** A ban that's environmentally rational can be regressive if not designed carefully.
+
+**Specific issues:**
+- **Price disparities**: Bamboo straws, glass containers, and compostable alternatives often cost 3-5x more. Who absorbs this?
+- **Access inequality**: Rural areas may lack infrastructure for alternatives; urban affluent neighborhoods have options.
+- **Disability erasure**: A blanket ban can ignore that some people *need* single-use sterile/easy-grip options. This isn't preference—it's access.
+- **Global justice**: Wealthy cities banning plastics while exporting waste to lower-income nations shifts the problem, not solves it.
+
+**How to address this:**
+
+1. **Implement targeted subsidies**: Make alternatives affordable for low-income households—vouchers, tax credits, or direct support to food banks and essential services.
+
+2. **Carve-out protections**: Medical and disability-related single-use items should be exempt with transparent criteria (not a loophole, but genuine need-based).
+
+3. **Worker transition programs**: Retrain informal waste workers into collection/sorting roles for new systems. Don't eliminate their livelihoods.
+
+4. **Staggered timelines**: Give small businesses 2-3 years with technical support, not 6 months. Provide grants for equipment changes.
+
+5. **Paired responsibility**: Only ban imports of single-use plastics *if* you also commit to not exporting waste to countries without capacity to manage it.
+
+---
+
+## Privacy, Autonomy, and Transparency Issues
+
+**Less obvious than environmental benefits, but real:**
+
+- **Behavioral mandate**: Bans restrict choice in ways that feel paternalistic, even if well-intentioned. People may resent being forced rather than persuaded.
+  - *Mitigation*: Lead with education and incentives first. Bans work better when they follow cultural shift, not precede it.
+
+- **Surveillance risk**: Enforcement can require tracking business compliance, waste sorting, or shopping behavior—creating data trails.
+  - *Mitigation*: Use spot-checks and industry audits rather than individual consumer surveillance. Be transparent about what's monitored and why.
+
+- **Information asymmetry**: Companies may greenwash with "biodegradable" plastics that don't actually decompose. Citizens can't verify claims.
+  - *Mitigation*: Require third-party certification and public databases of what materials actually break down under what conditions. Make standards transparent.
+
+- **Autonomy for whom?**: Framing this as "freedom of choice" ignores that people with fewer resources have less choice anyway. The real autonomy question is: who gets to decide what's acceptable risk for whom?
+
+---
+
+## Precedents Worth Considering
+
+**The slippery slope that matters:**
+- If we ban single-use plastics based on environmental harm, what comes next? Meat? Gas-powered vehicles? Certain fabrics?
+- This isn't necessarily *bad*—but it sets a precedent that government can restrict consumption for collective good.
+
+**What makes this precedent defensible:**
+- Plastic pollution has clear, measurable, *irreversible* harms (it doesn't biodegrade).
+- Alternatives exist (unlike, say, some medicines).
+- The harm is diffuse (affects everyone, but no single person bears catastrophic cost from the ban).
+
+**What requires caution:**
+- Ensure the same standard applies to powerful industries (fossil fuels, agriculture) and not just consumer goods.
+
