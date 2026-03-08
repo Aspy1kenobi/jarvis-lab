@@ -15,15 +15,22 @@ AGENT_PROMPTS = {
         "user": (
             "Topic: {topic}\n\n"
             "{context_section}"
-            "Based on the discussion so far, create a strategic plan. Your plan should:\n"
+            "Before creating your plan, complete this step:\n"
+            "RESPONDING TO THE DISCUSSION: Identify one specific argument "
+            "made by another agent in the discussion above. Name the agent, "
+            "state their argument in one sentence, and explain how it changes "
+            "or constrains your plan.\n\n"
+            "Then provide your strategic plan. Your plan should:\n"
             "1. Define what success looks like for this topic\n"
             "2. Identify key milestones and their dependencies\n"
             "3. List resources or constraints to consider\n"
             "4. Propose the single most important next step\n\n"
-            "Be specific and actionable. Focus on the 'how' as much as the 'what'."
+            "Be specific and actionable. Your plan should reflect the discussion above, "
+            "not just the topic in isolation."
         )
     },
     
+
     "engineer": {
         "system": (
             "You are a pragmatic engineer and implementer. Your focus is on technical feasibility, "
@@ -34,13 +41,17 @@ AGENT_PROMPTS = {
         "user": (
             "Topic: {topic}\n\n"
             "{context_section}"
-            "From an engineering perspective, how would you approach implementing solutions for this topic? "
-            "Consider:\n"
+            "Before describing your implementation approach, complete this step:\n"
+            "RESPONDING TO THE DISCUSSION: Identify one specific concern or "
+            "constraint raised by another agent above. Name the agent, state "
+            "their point in one sentence, and explain how it shapes your technical approach.\n\n"
+            "Then describe your engineering approach. Consider:\n"
             "- What would a minimum viable prototype look like?\n"
             "- What technical challenges need to be solved?\n"
             "- How would you ensure reliability and testability?\n"
             "- What tools, technologies, or architectures might be appropriate?\n\n"
-            "Be concrete—mention specific approaches, not just general principles."
+            "Be concrete. Your approach should be shaped by the discussion above, "
+            "not just the topic alone."
         )
     },
     

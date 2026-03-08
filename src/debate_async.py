@@ -7,7 +7,7 @@ import functools
 from experiment_logger import log_result
 from scorer import score_response
 from config import config
-from llm_client import call_ollama
+from llm_client import call_llm
 from prompts import build_messages
 
 logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def log_call(func):
 @log_call
 async def agent_planner(topic: str, context: str = "") -> str:
     messages = build_messages("planner", topic, context)
-    text, usage = await call_ollama(messages, config)
+    text, usage = await call_llm(messages, config)
     logger.debug("[planner] eval_count=%d", usage["eval_count"])
     return f"[Planner]\n{text}"
 
@@ -44,7 +44,7 @@ async def agent_planner(topic: str, context: str = "") -> str:
 @log_call
 async def agent_engineer(topic: str, context: str = "") -> str:
     messages = build_messages("engineer", topic, context)
-    text, usage = await call_ollama(messages, config)
+    text, usage = await call_llm(messages, config)
     logger.debug("[engineer] eval_count=%d", usage["eval_count"])
     return f"[Engineer]\n{text}"
 
@@ -52,7 +52,7 @@ async def agent_engineer(topic: str, context: str = "") -> str:
 @log_call
 async def agent_skeptic(topic: str, context: str = "") -> str:
     messages = build_messages("skeptic", topic, context)
-    text, usage = await call_ollama(messages, config)
+    text, usage = await call_llm(messages, config)
     logger.debug("[skeptic] eval_count=%d", usage["eval_count"])
     return f"[Skeptic]\n{text}"
 
@@ -60,7 +60,7 @@ async def agent_skeptic(topic: str, context: str = "") -> str:
 @log_call
 async def agent_ethicist(topic: str, context: str = "") -> str:
     messages = build_messages("ethicist", topic, context)
-    text, usage = await call_ollama(messages, config)
+    text, usage = await call_llm(messages, config)
     logger.debug("[ethicist] eval_count=%d", usage["eval_count"])
     return f"[Ethicist]\n{text}"
 
