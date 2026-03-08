@@ -9,6 +9,7 @@ from scorer import score_response
 from config import config
 from llm_client import call_llm
 from prompts import build_messages
+from agent_memory import AgentMemory
 
 logger = logging.getLogger(__name__)
 
@@ -177,8 +178,16 @@ async def run_debate_async(
         ("ethicist", agent_ethicist),
     ]
 
+    # Phase 2: per-agent private memory + shared debate pool
+    # Private: each agent's own prior arguments (self-influence)
+    # Shared: all agents' arguments (cross-agent influence)
+    private_memories: dict[str, AgentMemory] = {
+        name: AgentMemory(agent_name=name)
+        for name, _ in agents
+    }
+    shared_memory = AgentMemory(agent_name="shared")
+
     all_responses = []
-    round_history: list[dict] = []
 
     print("=" * 70)
     print(f"ASYNC DEBATE STARTING: '{topic}'")
@@ -189,35 +198,59 @@ async def run_debate_async(
     for round_num in range(1, rounds + 1):
         round_start = time.perf_counter()
 
-        context, window_label = build_context(round_history, context_window)
         print(f"\n--- Round {round_num} "
-              f"(starting at {round_start - start_time:.2f}s, context: {window_label}) ---")
+              f"(starting at {round_start - start_time:.2f}s) ---")
 
-        # Sequential execution: each agent awaits completion before the next starts.
-        # With a single Ollama instance, parallel firing serializes anyway and causes
-        # timeout cascades — sequential is both correct and faster in practice.
         for name, func in agents:
+            # Private context: what this agent has argued before
+            private_context = private_memories[name].build_context(
+                query=topic, top_k=2
+            )
+            # Shared context: what other agents have argued
+            shared_context = shared_memory.build_context(
+                query=topic, top_k=3
+            )
+
+            # Combine: shared pool first (other agents), then own position
+            if shared_context and private_context:
+                context = (
+                    f"Other agents' arguments:\n{shared_context}\n\n"
+                    f"Your prior position:\n{private_context}"
+                )
+            elif shared_context:
+                context = f"Other agents' arguments:\n{shared_context}"
+            elif private_context:
+                context = f"Your prior position:\n{private_context}"
+            else:
+                context = ""
+
+            context_label = "memory_shared+private" if context else "round_1_no_context"
+
+            # DEBUG — remove after verification
+            print(f"  [DEBUG] {name} | private: {len(private_memories[name])} entries, "
+                  f"shared: {len(shared_memory)} entries, context: {len(context)} chars")
+
             try:
                 await process_agent(
                     name, func, topic, context, round_num,
                     experiment_id, filename, all_responses,
-                    context_window=window_label,
+                    context_window=context_label,
                 )
+
+                # Store response in both private and shared memory
+                entry = next(
+                    (r for r in all_responses
+                     if r["round"] == round_num and r["agent"] == name),
+                    None,
+                )
+                if entry:
+                    private_memories[name].add(entry["response"])
+                    shared_memory.add(
+                        f"[{name}] {entry['response']}"
+                    )
+
             except Exception as e:
                 logger.error("[%s] failed in round %d: %s", name, round_num, e)
-
-        # Append this round's successful responses to history
-        for name, _ in agents:
-            entry = next(
-                (r for r in all_responses if r["round"] == round_num and r["agent"] == name),
-                None,
-            )
-            if entry:
-                round_history.append({
-                    "round": round_num,
-                    "name": name,
-                    "response": entry["response"],
-                })
 
         round_elapsed = time.perf_counter() - round_start
         print(f"--- Round {round_num} completed in {round_elapsed:.2f}s ---")
