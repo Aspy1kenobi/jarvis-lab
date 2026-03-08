@@ -20,8 +20,8 @@ class Config:
     
     # Generation parameters
     temperature: float = 0.7
-    max_tokens: int = 1024
-    timeout: float = 30.0
+    max_tokens: int = 512
+    timeout: float = 120.0
     
     # Experiment tracking
     phase: str = "phase1"
