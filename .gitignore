@@ -44,9 +44,11 @@ files/week7_kickoff.md
 .env.local
 .env.*.local
 !.env.template
+
 # Experiment outputs
 src/transcript_*.txt
 src/experiment_results.csv
 debate_results.json
 experiments/debate/
 src/experiment_results.csv
+!src/transcript_*.txt
