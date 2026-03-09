@@ -1,6 +1,14 @@
 """
 Prompts for multi-agent debate system.
 Each agent has a distinct role, personality, and reasoning style.
+
+Phase 3 change: Removed RESPONDING TO THE DISCUSSION attribution block
+from planner and engineer. Also changed context header from
+"Previous discussion:" to "Context:" and removed closing instructions
+to "reflect the discussion above." All three framing elements removed
+together to cleanly test whether citation behavior is prompt-dependent
+or emerges naturally from retrieval context.
+Skeptic and ethicist prompts unchanged — serve as within-experiment control.
 """
 
 AGENT_PROMPTS = {
@@ -15,21 +23,14 @@ AGENT_PROMPTS = {
         "user": (
             "Topic: {topic}\n\n"
             "{context_section}"
-            "Before creating your plan, complete this step:\n"
-            "RESPONDING TO THE DISCUSSION: Identify one specific argument "
-            "made by another agent in the discussion above. Name the agent, "
-            "state their argument in one sentence, and explain how it changes "
-            "or constrains your plan.\n\n"
-            "Then provide your strategic plan. Your plan should:\n"
+            "Provide your strategic plan. Your plan should:\n"
             "1. Define what success looks like for this topic\n"
             "2. Identify key milestones and their dependencies\n"
             "3. List resources or constraints to consider\n"
             "4. Propose the single most important next step\n\n"
-            "Be specific and actionable. Your plan should reflect the discussion above, "
-            "not just the topic in isolation."
+            "Be specific and actionable."
         )
     },
-    
 
     "engineer": {
         "system": (
@@ -41,20 +42,15 @@ AGENT_PROMPTS = {
         "user": (
             "Topic: {topic}\n\n"
             "{context_section}"
-            "Before describing your implementation approach, complete this step:\n"
-            "RESPONDING TO THE DISCUSSION: Identify one specific concern or "
-            "constraint raised by another agent above. Name the agent, state "
-            "their point in one sentence, and explain how it shapes your technical approach.\n\n"
-            "Then describe your engineering approach. Consider:\n"
+            "Describe your engineering approach. Consider:\n"
             "- What would a minimum viable prototype look like?\n"
             "- What technical challenges need to be solved?\n"
             "- How would you ensure reliability and testability?\n"
             "- What tools, technologies, or architectures might be appropriate?\n\n"
-            "Be concrete. Your approach should be shaped by the discussion above, "
-            "not just the topic alone."
+            "Be concrete."
         )
     },
-    
+
     "skeptic": {
         "system": (
             "You are a rigorous skeptic and devil's advocate. Your job is to pressure-test ideas, "
@@ -75,7 +71,7 @@ AGENT_PROMPTS = {
             "mitigated or what would need to be true for the plan to work."
         )
     },
-    
+
     "ethicist": {
         "system": (
             "You are an ethicist concerned with values, fairness, and human impact. You consider "
@@ -101,36 +97,34 @@ AGENT_PROMPTS = {
 
 def build_messages(agent_name: str, topic: str, context: str = "") -> list[dict]:
     """
-    Build the messages list for an agent in the format expected by Ollama API.
-    
+    Build the messages list for an agent in the format expected by the LLM API.
+
     Args:
         agent_name: Name of the agent ("planner", "engineer", "skeptic", "ethicist")
         topic: The debate topic
         context: Previous debate context (empty string for first round)
-    
+
     Returns:
         List of message dicts with "role" and "content" keys
-    
+
     Raises:
         KeyError: If agent_name is not found in AGENT_PROMPTS
     """
     if agent_name not in AGENT_PROMPTS:
         raise KeyError(f"Agent '{agent_name}' not found. Available agents: {list(AGENT_PROMPTS.keys())}")
-    
+
     prompts = AGENT_PROMPTS[agent_name]
-    
-    # Only include context section if there's actual context
-    context_section = f"Previous discussion:\n{context}\n\n" if context else ""
-    
-    # Format the user prompt with topic and optional context
+
+    context_section = f"Context:\n{context}\n\n" if context else ""
+
     user_content = prompts["user"].format(
-        topic=topic, 
+        topic=topic,
         context_section=context_section
     )
-    
+
     messages = [
         {"role": "system", "content": prompts["system"]},
         {"role": "user", "content": user_content}
     ]
-    
+
     return messages
