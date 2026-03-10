@@ -83,3 +83,6 @@ debate_async_c18f20,ethicist,3,0.7263302034428795,async_debate,4-component,round
 "debate_async_9f325c","engineer","3","0.6317581874647092","async_debate","4-component","memory_shared+private","sequential","2026-03-09T14:32:34.929302"
 "debate_async_9f325c","skeptic","3","0.6902777777777778","async_debate","4-component","memory_shared+private","sequential","2026-03-09T14:32:48.856660"
 "debate_async_9f325c","ethicist","3","0.8387883008356546","async_debate","4-component","memory_shared+private","sequential","2026-03-09T14:33:15.274985"
+"debate_single_02e544","generalist","1","0.8333333333333334","single_agent","3-component","none","sequential","2026-03-09T19:02:26.295635"
+"debate_single_02e544","generalist","2","0.8333333333333334","single_agent","3-component","none","sequential","2026-03-09T19:02:35.102428"
+"debate_single_02e544","generalist","3","0.7916666666666666","single_agent","3-component","none","sequential","2026-03-09T19:02:45.077689"
